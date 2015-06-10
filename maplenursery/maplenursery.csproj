@@ -90,6 +90,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="admin\addjob.aspx" />
     <Content Include="admin\adminhome.aspx" />
     <Content Include="Global.asax" />
     <Content Include="login.aspx" />
@@ -97,6 +98,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="admin\addjob.aspx.cs">
+      <DependentUpon>addjob.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\addjob.aspx.designer.cs">
+      <DependentUpon>addjob.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin\adminhome.aspx.cs">
       <DependentUpon>adminhome.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

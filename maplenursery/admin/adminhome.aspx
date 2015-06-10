@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="adminhome.aspx.cs" Inherits="maplenursery.admin.adminhome" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="adminhome.aspx.cs" Inherits="maplenursery.admin.adminhome" Async="true" %>
 
 <!DOCTYPE html>
 
@@ -9,7 +9,8 @@
 <body>
     <form id="form1" runat="server">
     <div>
-    
+        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/admin/addjob.aspx">HyperLink</asp:HyperLink>
+        
     </div>
     </form>
 </body>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using JustTest1.DataModel;
+using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +11,11 @@ namespace maplenursery.admin
 {
     public partial class adminhome : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
+       
 
+        protected async void Page_Load(object sender, EventArgs e)
+        {
+            
         }
     }
 }

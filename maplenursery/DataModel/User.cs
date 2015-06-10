@@ -17,5 +17,7 @@ namespace JustTest1.DataModel
 
         [JsonProperty(PropertyName = "usertype")]
         public int UserType { get; set; }
+        [JsonProperty(PropertyName = "availability")]
+        public bool Availability { get; set; }
     }
 }

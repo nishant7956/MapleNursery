@@ -16,5 +16,13 @@ namespace JustTest1.DataModel
 
         [JsonProperty(PropertyName = "jobdescription")]
         public string JobDesc { get; set; }
+
+        [JsonProperty(PropertyName = "assigneduser")]
+        public string AssignedUser { get; set; }
+
+        [JsonProperty(PropertyName = "status")]
+        public string JobStatus { get; set; }
+        
+
     }
 }
