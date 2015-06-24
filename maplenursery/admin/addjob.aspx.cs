@@ -7,17 +7,24 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using Parse;
 namespace maplenursery.admin
 {
     public partial class addjob : System.Web.UI.Page
     {
-        private MobileServiceCollection<User, User> items;
-        private IMobileServiceTable<User> userTable = Global.MobileService.GetTable<User>();
+        //var user = ParseUser.LogInAsync(userName.Trim(), password.Trim());
+        //private MobileServiceCollection<User, User> items;
+        //private IMobileServiceTable<User> userTable = Global.MobileService.GetTable<User>();
 
-        private IMobileServiceTable<Job> jobTable = Global.MobileService.GetTable<Job>(); 
+        //private IMobileServiceTable<Job> jobTable = Global.MobileService.GetTable<Job>(); 
         protected async void Page_Load(object sender, EventArgs e)
         {
+            Session["pid"] = "_addjob";
+            if (Session["adminusername"] == null)
+            {
+                
+                Response.Redirect("~/login.aspx",false);
+            }
             //items = await userTable
             //    .Where(con => con.Availability != false)
             //    .ToCollectionAsync();
@@ -40,37 +47,25 @@ namespace maplenursery.admin
         //}
         private async Task RefreshTodoItems()
         {
-            MobileServiceInvalidOperationException exception = null;
-            try
-            {
+           
                 // This code refreshes the entries in the list view by querying the TodoItems table.
                 // The query excludes completed TodoItems
-                items = await userTable
-                    .Where(todoItem => todoItem.Availability != false)
-                    .ToCollectionAsync();
-                
-            }
-            catch (MobileServiceInvalidOperationException e)
-            {
-                exception = e;
-            }
+                var query = ParseObject.GetQuery("Job")
+    .WhereEqualTo("Availability", "false");
+                IEnumerable<ParseObject> results = await query.FindAsync();
 
-            if (exception != null)
-            {
-                Lblerror.Text = exception.Message;
+                //items = await userTable
+                //    .Where(todoItem => todoItem.Availability != false)
+                //    .ToCollectionAsync();
                 
-
-                
-            }
-            else
-            {
-                LiEmployee.DataSource = items;
+          
+                LiEmployee.DataSource = results;
                 LiEmployee.DataTextField = "Name";
                 LiEmployee.DataValueField = "Id";
                 LiEmployee.DataBind();
 
                 LiEmployee.EnableViewState = true;
-            }
+            
         }
 
         protected async void Button1_Click(object sender, EventArgs e)
@@ -78,9 +73,14 @@ namespace maplenursery.admin
             var selectedValue = LiEmployee.SelectedItem;
             //User userObject = items[selectedValue];
             //Response.Write((selectedValue.Value));
-            var newJob = new Job { JobName = JobTitle.Text, JobDesc = JobDescription.Text, AssignedUser = selectedValue.Value };
-            //Debug.WriteLine("" + selectedValue.Id);
-             await InsertnewJob(newJob);
+            ParseObject job = new ParseObject("job");
+            job["JobName"] = JobTitle.Text;
+            job["JobDesc"] = JobDescription.Text;
+            job["AssignedUser"] = selectedValue.Value;
+            await job.SaveAsync();
+            //var newJob = new Job { JobName = JobTitle.Text, JobDesc = JobDescription.Text, AssignedUser = selectedValue.Value };
+            ////Debug.WriteLine("" + selectedValue.Id);
+            // await InsertnewJob(newJob);
         }
 
         //private async void SaveaJob(object sender, EventArgs e)
@@ -90,12 +90,12 @@ namespace maplenursery.admin
         //}
 
 
-        private async Task InsertnewJob(Job newJob)
-        {
-            await jobTable.InsertAsync(newJob);
-            Lblerror.Text = "saved";
-            //items.Add(newJob); 
-        }
+        //private async Task InsertnewJob(Job newJob)
+        //{
+        //    await jobTable.InsertAsync(newJob);
+        //    Lblerror.Text = "saved";
+        //    //items.Add(newJob); 
+        //}
 
        
          

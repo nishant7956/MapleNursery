@@ -1,0 +1,43 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="mas.master.cs" Inherits="maplenursery.admin.mas"  %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Maple Creek</title>
+<link href="css/1.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <form id="forms" runat="server">
+<a name="top" id="top"></a>
+
+		<div id="menu">
+            
+            <asp:LinkButton ID="Login" runat="server" OnClick="Login_Click" CausesValidation="false"></asp:LinkButton>
+				<a href="adminhome.aspx">home</a>
+
+             <a href="addjob.aspx">Add Job</a>
+             <a href="#css">Add Employee</a> <a href="#about">Add Plant</a> 
+		<asp:Label ID="session" runat="server" ></asp:Label>
+                </div>
+		
+		<div id="header">
+				<h1>Maple Creek Nursery<img src="images/logo.jpg" alt="Your Logo" height="100" width="100" class="logo" /></h1>
+		
+		</div>
+    
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+    </asp:ContentPlaceHolder>
+
+    </form>
+   <div id="footer" style="float:inherit; position:fixed; bottom:0; text-align:center; height:60px;" >
+  		Copyright@ANNCorp<br />
+
+  </div>
+
+</body>
+</html>

@@ -1,8 +1,10 @@
 ﻿using JustTest1.DataModel;
 using Microsoft.WindowsAzure.MobileServices;
+using Parse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -11,7 +13,18 @@ namespace maplenursery
 {
     public partial class login : System.Web.UI.Page
     {
-        private IMobileServiceTable<User> userTable = Global.MobileService.GetTable<User>();
+        public static string name;
+        public const int AdminCode = 1;
+        public const int UserCode = 2;
+
+
+        public static async Task<User> ValidateLogin(string userName, string password)
+        {
+            var user = await ParseUser.LogInAsync(userName.Trim(), password.Trim());
+            User currentUser = new User() { Id = user.ObjectId, UserType = user.Get<int>("user_type"), Name = user.Username };
+            return currentUser;
+        } 
+        //private IMobileServiceTable<User> userTable = Global.MobileService.GetTable<User>();
         //User m = new User();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -109,34 +122,35 @@ namespace maplenursery
         //        await ValidateInput();
         //    }
         //}
-
+         [System.Web.Services.WebMethod(EnableSession = true)]
         protected async void Login1_Authenticate(object sender, AuthenticateEventArgs e)
         {
-            MobileServiceInvalidOperationException exception = null;
+            
             try
             {
-
-                var user_Admin = await userTable
-                .Where((con => con.Name == Login1.UserName  && con.Password == Login1.Password && con.UserType == 1))
-                .ToCollectionAsync();
-                var user_normal = await userTable
-                   .Where(con => con.Name == Login1.UserName && con.Password == Login1.Password && con.UserType == 2)
-                   .ToCollectionAsync();
-
-                if (user_Admin.Count > 0 && user_normal.Count == 0)
+                var user = await ValidateLogin(Login1.UserName, Login1.Password);
+                if (user.UserType == AdminCode)
                 {
+                    //Session.Add("adminusername", Login1.UserName);
+                    Session["adminusername"] = (string)Login1.UserName;
+                    //SetLoginHint("Success admin ");
                     e.Authenticated = true;
-                    Session["username"] = Login1.UserName;
-
-                    Response.Redirect("admin/adminhome.aspx");
+                    Response.Redirect("admin/adminhome.aspx",false);
+                    if (Convert.ToString(Session["pid"]).Equals("_addjob"))
+                    {
+                        Response.Redirect("admin/addjob.aspx",false);
+                    }
                 }
-                if (user_Admin.Count == 0 && user_normal.Count > 0)
+                if (user.UserType == UserCode)
                 {
+                    
+                    
                     e.Authenticated = true;
-                    Session["username"] = Login1.UserName;
-
-                    Response.Redirect("userhome.aspx");
-
+                    name = Login1.UserName.Trim();
+                    //SetLoginHint("Success user ");
+                    HttpContext.Current.Session["username"] = name;
+                    Response.Redirect("userhome.aspx",false);
+                    Label1.Text = Convert.ToString( HttpContext.Current.Session["username"]);
                 }
                 else
                 {
@@ -144,17 +158,56 @@ namespace maplenursery
                 }
 
             }
-            catch (MobileServiceInvalidOperationException en)
+            catch (Exception)
             {
-                exception = en;
-            }
+                Label1.Text="Invalid username / password";
 
-            if (exception != null)
-            {
-                Response.Write("<script LANGUAGE='JavaScript' >alert(" + exception.Message + ")</script>");
-
-                //SetLoginHint(exception.Message + "");
             }
+            //MobileServiceInvalidOperationException exception = null;
+            //try
+            //{
+
+            //    var user_Admin = await userTable
+            //    .Where((con => con.Name == Login1.UserName  && con.Password == Login1.Password && con.UserType == 1))
+            //    .ToCollectionAsync();
+            //    var user_normal = await userTable
+            //       .Where(con => con.Name == Login1.UserName && con.Password == Login1.Password && con.UserType == 2)
+            //       .ToCollectionAsync();
+
+            //    if (user_Admin.Count > 0 && user_normal.Count == 0)
+            //    {
+            //        e.Authenticated = true;
+            //        Session["username"] = Login1.UserName;
+
+            //        Response.Redirect("admin/adminhome.aspx");
+            //    }
+            //    if (user_Admin.Count == 0 && user_normal.Count > 0)
+            //    {
+            //        e.Authenticated = true;
+            //        Session["username"] = Login1.UserName;
+
+            //        Response.Redirect("userhome.aspx");
+
+            //    }
+            //    else
+            //    {
+            //        e.Authenticated = false;
+            //    }
+
+            //}
+            //catch (MobileServiceInvalidOperationException en)
+            //{
+            //    exception = en;
+            //}
+
+            //if (exception != null)
+            //{
+            //    Response.Write("<script LANGUAGE='JavaScript' >alert(" + exception.Message + ")</script>");
+
+            //    //SetLoginHint(exception.Message + "");
+            //}
         }
+
+        
     }
 }

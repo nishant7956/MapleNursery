@@ -1,17 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="adminhome.aspx.cs" Inherits="maplenursery.admin.adminhome" Async="true" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/admin/mas.Master" AutoEventWireup="true" CodeBehind="adminhome.aspx.cs" Inherits="maplenursery.admin.adminhome" Async="true" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>
-        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/admin/addjob.aspx">HyperLink</asp:HyperLink>
-        
+<asp:Content ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+        <div>
+        <asp:Label ID="Label1" runat="server" Text="Welcome Admin!!" Font-Bold="True" Font-Size="X-Large" ></asp:Label>
     </div>
-    </form>
-</body>
-</html>
+</asp:Content>

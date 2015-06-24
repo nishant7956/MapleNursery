@@ -19,3 +19,7 @@ c:\users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\o
 c:\users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\obj\Debug\maplenursery.csprojResolveAssemblyReference.cache
 c:\users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\obj\Debug\maplenursery.dll
 c:\users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\obj\Debug\maplenursery.pdb
+C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\Parse.dll
+C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\Parse.NetFx45.dll
+C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\Parse.xml
+C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\Parse.NetFx45.xml

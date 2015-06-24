@@ -1,13 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="addjob.aspx.cs" Inherits="maplenursery.admin.addjob" Async="true" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/admin/mas.Master" CodeBehind="addjob.aspx.cs" Inherits="maplenursery.admin.addjob" Async="true" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
+<asp:Content ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
 
         <br />
@@ -28,6 +21,5 @@
         <br />
         <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click"  />
     </div>
-    </form>
-</body>
-</html>
+    
+</asp:Content>

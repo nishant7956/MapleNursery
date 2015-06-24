@@ -13,9 +13,17 @@ namespace maplenursery.admin
     {
        
 
-        protected async void Page_Load(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (Session["adminusername"] != null)
+            {
+                Label1.Visible = true;
+            }
+            else
+            {
+                Label1.Visible = false;
+            }
         }
+
     }
 }

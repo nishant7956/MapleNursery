@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace JustTest1.DataModel
 {
-    class User
+    public class User
     {
         public string Id { get; set; }
 
