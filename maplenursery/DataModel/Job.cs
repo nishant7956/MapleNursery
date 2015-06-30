@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JustTest1.DataModel 
 {
-    class Job 
+    public class Job 
     {
         
         public string Id { get; set; }
@@ -22,7 +22,8 @@ namespace JustTest1.DataModel
 
         [JsonProperty(PropertyName = "status")]
         public string JobStatus { get; set; }
-        
 
+        
+        public string content { get; set; }
     }
 }

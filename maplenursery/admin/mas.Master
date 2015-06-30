@@ -20,7 +20,7 @@
 				<a href="adminhome.aspx">home</a>
 
              <a href="addjob.aspx">Add Job</a>
-             <a href="#css">Add Employee</a> <a href="#about">Add Plant</a> 
+             <a href="#css">Add Employee</a> <a href="addplant.aspx">Add Plant</a> 
 		<asp:Label ID="session" runat="server" ></asp:Label>
                 </div>
 		
@@ -34,7 +34,7 @@
     </asp:ContentPlaceHolder>
 
     </form>
-   <div id="footer" style="float:inherit; position:fixed; bottom:0; text-align:center; height:60px;" >
+   <div id="footer" style="float:inherit; position:relative; bottom:0; text-align:center; height:60px;" >
   		Copyright@ANNCorp<br />
 
   </div>

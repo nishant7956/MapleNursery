@@ -10,88 +10,79 @@
 namespace maplenursery.admin {
     
     
-    public partial class addjob {
+    public partial class addplant {
         
         /// <summary>
-        /// Lblerror control.
+        /// lblerror control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lblerror;
+        protected global::System.Web.UI.WebControls.Label lblerror;
         
         /// <summary>
-        /// Label1 control.
+        /// lblname control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lblname;
         
         /// <summary>
-        /// JobTitle control.
+        /// Name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox JobTitle;
+        protected global::System.Web.UI.WebControls.TextBox Name;
         
         /// <summary>
-        /// Label2 control.
+        /// lbldesc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label lbldesc;
         
         /// <summary>
-        /// JobDescription control.
+        /// Description control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox JobDescription;
+        protected global::System.Web.UI.WebControls.TextBox Description;
         
         /// <summary>
-        /// Label3 control.
+        /// lblupload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label lblupload;
         
         /// <summary>
-        /// LiEmployee control.
+        /// FileUpload1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList LiEmployee;
+        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
         
         /// <summary>
-        /// Label4 control.
+        /// Save control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
-        
-        /// <summary>
-        /// DLselectedplant control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DataList DLselectedplant;
+        protected global::System.Web.UI.WebControls.Button Save;
         
         /// <summary>
         /// Button1 control.
@@ -103,15 +94,6 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
-        /// addplant control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button addplant;
-        
-        /// <summary>
         /// DataList1 control.
         /// </summary>
         /// <remarks>
@@ -119,14 +101,5 @@ namespace maplenursery.admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DataList DataList1;
-        
-        /// <summary>
-        /// Button2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
     }
 }

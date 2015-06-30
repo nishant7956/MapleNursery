@@ -87,6 +87,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="admin\addplant.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -153,6 +154,13 @@
     <Compile Include="admin\addjob.aspx.designer.cs">
       <DependentUpon>addjob.aspx</DependentUpon>
     </Compile>
+    <Compile Include="admin\addplant.aspx.cs">
+      <DependentUpon>addplant.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\addplant.aspx.designer.cs">
+      <DependentUpon>addplant.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin\adminhome.aspx.cs">
       <DependentUpon>adminhome.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -161,7 +169,9 @@
       <DependentUpon>adminhome.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controller\LoginCheck.cs" />
+    <Compile Include="DataModel\content.cs" />
     <Compile Include="DataModel\Job.cs" />
+    <Compile Include="DataModel\Plant.cs" />
     <Compile Include="DataModel\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
