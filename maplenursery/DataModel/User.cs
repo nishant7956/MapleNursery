@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
-
+using Parse;
 namespace JustTest1.DataModel
 {
     public class User
@@ -19,5 +19,6 @@ namespace JustTest1.DataModel
         public int UserType { get; set; }
         [JsonProperty(PropertyName = "availability")]
         public bool Availability { get; set; }
+        public ParseGeoPoint lastloc { get; set; }
     }
 }

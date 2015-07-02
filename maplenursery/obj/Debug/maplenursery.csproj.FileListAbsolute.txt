@@ -23,3 +23,9 @@ C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\b
 C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\Parse.NetFx45.dll
 C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\Parse.xml
 C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\Parse.NetFx45.xml
+C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\GMap.NET.Core.dll
+C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\GMap.NET.WindowsForms.dll
+C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\GMaps.dll
+C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\GMap.NET.Core.xml
+C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\GMap.NET.WindowsForms.xml
+C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\GoogleMaps.LocationServices.dll

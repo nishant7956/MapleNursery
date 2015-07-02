@@ -19,6 +19,9 @@
         <asp:Label ID="Label2" runat="server" Text="Job Description"></asp:Label>
         <br />
         <asp:TextBox ID="JobDescription" runat="server"></asp:TextBox>
+         <br />
+         <br />
+         <asp:Label ID="Label6" runat="server" Text="Address"></asp:Label>
         <br />
         <br />
         <asp:Label ID="Label3" runat="server" Text="Assign User"></asp:Label>
@@ -54,7 +57,7 @@
         <br />
         <asp:Button ID="Button1" runat="server" Text="Save" OnClick="Button1_Click"  /><br />
          <br />
-        <asp:Button ID="addplant" runat="server" Text="Show List" OnClick="addplant_Click" />
+        <asp:Button ID="addplant" runat="server" Text="Add Plant" OnClick="addplant_Click" />
     </div>
     
      
@@ -84,6 +87,9 @@
 
             </asp:DataList>
           
-    <asp:Button ID="Button2" runat="server" Text="Add Plant" OnClick="selectplant_Click"  />
+    <asp:Button ID="selectplant" runat="server" Text="select " OnClick="selectplant_Click"  />
+  
+     <br />
+     <br />
   
 </asp:Content>

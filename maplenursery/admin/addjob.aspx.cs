@@ -18,7 +18,7 @@ namespace maplenursery.admin
         content c = new content();
         List<content> allcontent = new List<content>();
 
-
+        List<string> selected = new List<string>();
 
         static List<Plant> listToShow = new List<Plant>();
         //var user = ParseUser.LogInAsync(userName.Trim(), password.Trim());
@@ -29,7 +29,7 @@ namespace maplenursery.admin
         protected async void Page_Load(object sender, EventArgs e)
         {
 
-
+            selectplant.Visible = false;
             //Session["pid"] = "_addjob";
             //if (Session["adminusername"] == null)
             //{
@@ -107,18 +107,28 @@ namespace maplenursery.admin
 
         protected async void Button1_Click(object sender, EventArgs e)
         {
-            var selectedValue = LiEmployee.SelectedItem;
-            //User userObject = items[selectedValue];
-            //Response.Write((selectedValue.Value));
-            
-            
-            job["name"] = JobTitle.Text;
-            job["description"] = JobDescription.Text;
-            job["assignedUser"] = selectedValue.Value;
-            job["content"] = JsonConvert.SerializeObject(listToShow);
-            job["Status"]="sent";
-            job["userResponse"]="waiting";
-            await job.SaveAsync();
+            try
+            {
+                var selectedValue = LiEmployee.SelectedItem;
+                //User userObject = items[selectedValue];
+                //Response.Write((selectedValue.Value));
+
+
+                job["name"] = JobTitle.Text;
+                job["description"] = JobDescription.Text;
+                job["assignedUser"] = selectedValue.Value;
+                job["content"] = JsonConvert.SerializeObject(listToShow);
+                job["Status"] = "sent";
+                job["userResponse"] = "waiting";
+                await job.SaveAsync();
+                Lblerror.Text = "Saved Successfully";
+                
+
+            }
+            catch(Exception en)
+            {
+                Lblerror.Text = en.Message;
+            }
             //var newJob = new Job { JobName = JobTitle.Text, JobDesc = JobDescription.Text, AssignedUser = selectedValue.Value };
             ////Debug.WriteLine("" + selectedValue.Id);
             // await InsertnewJob(newJob);
@@ -127,7 +137,7 @@ namespace maplenursery.admin
         {
             try
             {
-
+                DataList1.Visible = true;
                 //ParseQuery<ParseObject> query = ParseObject.GetQuery("Plant");
 
                 //var queryTask = query.FirstAsync();
@@ -154,12 +164,12 @@ namespace maplenursery.admin
 
                 DataList1.DataSource = all;
                 DataList1.DataBind();
-                
+                selectplant.Visible = true;
 
             }
             catch (Exception err)
             {
-                Console.Write("" + err);
+                Lblerror.Text = err.Message;
             }
             //lblerror.Text = assd;
 
@@ -220,9 +230,17 @@ namespace maplenursery.admin
         {
             //Button btn=(Button)sender; 
             select_plant();
+            DataList1.Visible = false;
         }
         public void select_plant()
-        { 
+        {
+            foreach (DataListItem selecteditem in DLselectedplant.Items)
+            {
+                Label selectedid = (Label)selecteditem.FindControl("Label5");
+               
+                selected.Add(selectedid.Text);
+            }
+            
             foreach (DataListItem items in DataList1.Items)
             {
                 TextBox quantity = (TextBox)items.FindControl("lblquantity");
@@ -230,23 +248,35 @@ namespace maplenursery.admin
                 CheckBox cb = (CheckBox)items.FindControl("CheckBox1");
                 Label lblId = (Label)items.FindControl("LblID"); 
                 Image i = (Image)items.FindControl("Image1");
-                 
 
+                List<string> ids=new List<string>();
+                ids.Add(lblId.Text);
                 if ((items.FindControl("CheckBox1") as CheckBox).Checked)
-                { 
+                {
+                    bool result = ids.Intersect(selected).Count() == ids.Count;
+                    
+                    if (!result)
+                    {
                         listToShow.Add(new Plant()
                         {
                             Id = lblId.Text,
                             Name = cb.Text,
                             imagePath = new Uri(i.ImageUrl),
-                            Price = Convert.ToDouble(price.Text), 
-                            Quantity = Convert.ToInt16(quantity.Text) 
-                        }); 
+                            Price = Convert.ToDouble(price.Text),
+                            Quantity = Convert.ToInt16(quantity.Text)
+                        });
+                    }
+                    else
+                    {
+                        Lblerror.Text = "already selected";
+                    }
                 }
                  
             }
             DLselectedplant.DataSource = listToShow;
             DLselectedplant.DataBind();
+            
+            selectplant.Visible = false;
         }
 
         protected void DLselectedplant_DeleteCommand(object source, DataListCommandEventArgs e)

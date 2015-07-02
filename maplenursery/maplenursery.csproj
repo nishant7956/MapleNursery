@@ -44,6 +44,18 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="GMap.NET.Core">
+      <HintPath>..\packages\GMap.NET.WindowsForms.1.7.1\lib\net40\GMap.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.WindowsForms">
+      <HintPath>..\packages\GMap.NET.WindowsForms.1.7.1\lib\net40\GMap.NET.WindowsForms.dll</HintPath>
+    </Reference>
+    <Reference Include="GMaps">
+      <HintPath>..\..\..\..\..\Downloads\GMaps.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleMaps.LocationServices">
+      <HintPath>..\packages\GoogleMaps.LocationServices.0.9.8.5\lib\net40\GoogleMaps.LocationServices.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.WindowsAzure.Mobile">
       <HintPath>..\packages\WindowsAzure.MobileServices.1.3.2\lib\net45\Microsoft.WindowsAzure.Mobile.dll</HintPath>
@@ -95,6 +107,7 @@
     <Content Include="admin\css\1.css" />
     <Content Include="css\1.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="GoogleMaps.LocationServices.readme.txt" />
     <Content Include="Icon.png" />
     <Content Include="admin\images\backgrounds\a_hover.jpg" />
     <Content Include="admin\images\backgrounds\desc.jpg" />
@@ -129,6 +142,7 @@
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
+    <Content Include="temp.aspx" />
     <Content Include="userMaster.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -191,6 +205,13 @@
       <DependentUpon>mas.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="temp.aspx.cs">
+      <DependentUpon>temp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="temp.aspx.designer.cs">
+      <DependentUpon>temp.aspx</DependentUpon>
+    </Compile>
     <Compile Include="userhome.aspx.cs">
       <DependentUpon>userhome.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
