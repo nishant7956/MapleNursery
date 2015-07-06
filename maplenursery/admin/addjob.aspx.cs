@@ -10,14 +10,16 @@ using System.Web.UI.WebControls;
 using Parse;
 using maplenursery.DataModel;
 using Newtonsoft.Json;
+using GoogleMaps.LocationServices;
 namespace maplenursery.admin
 {
     public partial class addjob : System.Web.UI.Page
     {
-        ParseObject job = new ParseObject("Job");
+       
+        
         content c = new content();
         List<content> allcontent = new List<content>();
-
+        List<EmpJobRelation> empjobrel=new List<EmpJobRelation>();
         List<string> selected = new List<string>();
 
         static List<Plant> listToShow = new List<Plant>();
@@ -107,6 +109,14 @@ namespace maplenursery.admin
 
         protected async void Button1_Click(object sender, EventArgs e)
         {
+            ParseObject job = new ParseObject("Job");
+            ParseObject empjob = new ParseObject("EmpJobRelation");
+            var locationService = new GoogleLocationService();
+            var point = locationService.GetLatLongFromAddress(txtlocation.Text);
+            //var latitude = point.Latitude;
+            //var longitude = point.Longitude;
+            //Response.Write(latitude + "" + longitude);
+            var addpoint = new ParseGeoPoint(point.Latitude, point.Longitude);
             try
             {
                 var selectedValue = LiEmployee.SelectedItem;
@@ -116,10 +126,34 @@ namespace maplenursery.admin
 
                 job["name"] = JobTitle.Text;
                 job["description"] = JobDescription.Text;
-                job["assignedUser"] = selectedValue.Value;
+                job["EmployeeId"] = selectedValue.Value;
                 job["content"] = JsonConvert.SerializeObject(listToShow);
                 job["Status"] = "sent";
-                job["userResponse"] = "waiting";
+                
+                job["location"]=txtlocation.Text;
+                job["locCoordinate"]=addpoint;
+                empjob["EmployeeId"]=selectedValue.Value;
+                empjob["userResponse"] = "waiting";
+                await job.SaveAsync();
+                await empjob.SaveAsync();
+                IEnumerable<ParseObject> query  =await ParseObject.GetQuery("EmpJobRelation").WhereEqualTo("EmployeeId", selectedValue.Value).FindAsync();
+                foreach (ParseObject obj in query)
+                {
+                    empjobrel.Add(new EmpJobRelation()
+                    {
+                        Id=obj.ObjectId
+                    }
+                        );
+ 
+                }
+                //ParseObject p;
+                //var relaiton = p.GetRelation<ParseObject>("UserRelation");
+                foreach(var a in empjobrel)
+                {
+                    
+                    job["UserRelation"] = a.Id;
+                }
+                
                 await job.SaveAsync();
                 Lblerror.Text = "Saved Successfully";
                 
@@ -251,6 +285,10 @@ namespace maplenursery.admin
 
                 List<string> ids=new List<string>();
                 ids.Add(lblId.Text);
+                int q = Convert.ToInt16(quantity.Text);
+                double p = Convert.ToDouble(price.Text);
+
+                double totol = q * p;
                 if ((items.FindControl("CheckBox1") as CheckBox).Checked)
                 {
                     bool result = ids.Intersect(selected).Count() == ids.Count;
@@ -263,7 +301,8 @@ namespace maplenursery.admin
                             Name = cb.Text,
                             imagePath = new Uri(i.ImageUrl),
                             Price = Convert.ToDouble(price.Text),
-                            Quantity = Convert.ToInt16(quantity.Text)
+                            Quantity = Convert.ToInt16(quantity.Text),
+                            Total=totol
                         });
                     }
                     else

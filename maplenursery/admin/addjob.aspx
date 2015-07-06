@@ -21,7 +21,10 @@
         <asp:TextBox ID="JobDescription" runat="server"></asp:TextBox>
          <br />
          <br />
-         <asp:Label ID="Label6" runat="server" Text="Address"></asp:Label>
+         <asp:Label ID="Label6" runat="server" Text="Job Location"></asp:Label>
+         <br />
+         <asp:TextBox ID="txtlocation" runat="server"></asp:TextBox>
+         <br />
         <br />
         <br />
         <asp:Label ID="Label3" runat="server" Text="Assign User"></asp:Label>
@@ -53,11 +56,12 @@
          </asp:DataList>
         <br />
       
+        <asp:Button ID="addplant" runat="server" Text="Add Plant" OnClick="addplant_Click" />
+      
         <br />
         <br />
         <asp:Button ID="Button1" runat="server" Text="Save" OnClick="Button1_Click"  /><br />
          <br />
-        <asp:Button ID="addplant" runat="server" Text="Add Plant" OnClick="addplant_Click" />
     </div>
     
      

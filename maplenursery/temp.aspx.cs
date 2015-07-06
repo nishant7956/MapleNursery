@@ -16,11 +16,7 @@ namespace maplenursery
 
         protected void convert_Click(object sender, EventArgs e)
         {
-            var locationService = new GoogleLocationService();
-            var point = locationService.GetLatLongFromAddress(streetname.Text);
-            var latitude = point.Latitude;
-            var longitude = point.Longitude;
-            Response.Write(latitude+""+longitude);
+            
         }
     }
 }

@@ -184,6 +184,7 @@
     </Compile>
     <Compile Include="Controller\LoginCheck.cs" />
     <Compile Include="DataModel\content.cs" />
+    <Compile Include="DataModel\EmpJobRelation.cs" />
     <Compile Include="DataModel\Job.cs" />
     <Compile Include="DataModel\Plant.cs" />
     <Compile Include="DataModel\User.cs" />
