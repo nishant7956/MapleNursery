@@ -73,6 +73,7 @@
     <Reference Include="Parse.NetFx45">
       <HintPath>..\packages\Parse.1.5.2\lib\net45\Parse.NetFx45.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Extensions">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\net45\System.Net.Http.Extensions.dll</HintPath>
@@ -99,6 +100,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="admin\addemployee.aspx" />
     <Content Include="admin\addplant.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -106,6 +108,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="admin\css\1.css" />
     <Content Include="css\1.css" />
+    <Content Include="font-awesome\css\font-awesome.css" />
+    <Content Include="font-awesome\css\font-awesome.min.css" />
+    <Content Include="font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="GoogleMaps.LocationServices.readme.txt" />
     <Content Include="Icon.png" />
@@ -126,6 +131,7 @@
     <Content Include="images\backgrounds\submenua_hover.jpg" />
     <Content Include="images\logo.jpg" />
     <Content Include="index.html" />
+    <Content Include="js\jquery-1.10.2.min.js" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -136,7 +142,69 @@
     <Content Include="admin\mas.Master" />
     <Content Include="admin\images\_notes\logo.jpg.mno" />
     <Content Include="images\_notes\logo.jpg.mno" />
+    <Content Include="font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="font-awesome\less\bordered-pulled.less" />
+    <Content Include="font-awesome\less\core.less" />
+    <Content Include="font-awesome\less\fixed-width.less" />
+    <Content Include="font-awesome\less\font-awesome.less" />
+    <Content Include="font-awesome\less\icons.less" />
+    <Content Include="font-awesome\less\larger.less" />
+    <Content Include="font-awesome\less\list.less" />
+    <Content Include="font-awesome\less\mixins.less" />
+    <Content Include="font-awesome\less\path.less" />
+    <Content Include="font-awesome\less\rotated-flipped.less" />
+    <Content Include="font-awesome\less\spinning.less" />
+    <Content Include="font-awesome\less\stacked.less" />
+    <Content Include="font-awesome\less\variables.less" />
+    <Content Include="font-awesome\scss\font-awesome.scss" />
+    <Content Include="font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="font-awesome\scss\_core.scss" />
+    <Content Include="font-awesome\scss\_fixed-width.scss" />
+    <Content Include="font-awesome\scss\_icons.scss" />
+    <Content Include="font-awesome\scss\_larger.scss" />
+    <Content Include="font-awesome\scss\_list.scss" />
+    <Content Include="font-awesome\scss\_mixins.scss" />
+    <Content Include="font-awesome\scss\_path.scss" />
+    <Content Include="font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="font-awesome\scss\_spinning.scss" />
+    <Content Include="font-awesome\scss\_stacked.scss" />
+    <Content Include="font-awesome\scss\_variables.scss" />
+    <None Include="Properties\PublishProfiles\maplenursery.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <None Include="Resources\letter_a.png" />
+    <None Include="Resources\letter_b.png" />
+    <None Include="Resources\letter_c.png" />
+    <None Include="Resources\letter_d.png" />
+    <None Include="Resources\letter_e.png" />
+    <None Include="Resources\letter_f.png" />
+    <None Include="Resources\letter_g.png" />
+    <None Include="Resources\letter_h.png" />
+    <None Include="Resources\letter_i.png" />
+    <None Include="Resources\letter_j.png" />
+    <None Include="Resources\letter_k.png" />
+    <None Include="Resources\letter_l.png" />
+    <None Include="Resources\letter_m.png" />
+    <None Include="Resources\letter_n.png" />
+    <None Include="Resources\letter_o.png" />
+    <None Include="Resources\letter_p.png" />
+    <None Include="Resources\letter_q.png" />
+    <None Include="Resources\letter_r.png" />
+    <None Include="Resources\letter_s.png" />
+    <None Include="Resources\letter_t.png" />
+    <None Include="Resources\letter_u.png" />
+    <None Include="Resources\letter_v.png" />
+    <None Include="Resources\letter_w.png" />
+    <None Include="Resources\letter_x.png" />
+    <None Include="Resources\letter_y.png" />
+    <None Include="Resources\letter_z.png" />
+    <Content Include="Resources\finished.png" />
+    <Content Include="Resources\idle.png" />
+    <None Include="Resources\map-marker-3.png" />
+    <Content Include="Resources\offwork.png" />
+    <Content Include="Resources\working.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
@@ -161,6 +229,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="admin\addemployee.aspx.cs">
+      <DependentUpon>addemployee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\addemployee.aspx.designer.cs">
+      <DependentUpon>addemployee.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin\addjob.aspx.cs">
       <DependentUpon>addjob.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -182,9 +257,17 @@
     <Compile Include="admin\adminhome.aspx.designer.cs">
       <DependentUpon>adminhome.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controller\JobControlls.cs" />
     <Compile Include="Controller\LoginCheck.cs" />
+    <Compile Include="Controller\MemberInfoGetting.cs" />
+    <Compile Include="Controller\UserControlls.cs" />
+    <Compile Include="DataModel\cGoogleMap.cs" />
     <Compile Include="DataModel\content.cs" />
+    <Compile Include="DataModel\EmpJobNames.cs" />
     <Compile Include="DataModel\EmpJobRelation.cs" />
+    <Compile Include="DataModel\GService.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DataModel\Job.cs" />
     <Compile Include="DataModel\Plant.cs" />
     <Compile Include="DataModel\User.cs" />
@@ -206,6 +289,11 @@
       <DependentUpon>mas.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="temp.aspx.cs">
       <DependentUpon>temp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -227,6 +315,12 @@
     <Compile Include="userMaster.Master.designer.cs">
       <DependentUpon>userMaster.Master</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

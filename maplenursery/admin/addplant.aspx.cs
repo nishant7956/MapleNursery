@@ -1,4 +1,5 @@
-﻿using maplenursery.DataModel;
+﻿using JustTest1.Controller;
+using maplenursery.DataModel;
 using Parse;
 using System;
 using System.Collections.Generic;
@@ -31,18 +32,28 @@ namespace maplenursery.admin
                     string filename = FileUpload1.FileName;
                     ParseFile file = new ParseFile("filename.jpg", FileUpload1.FileBytes);
                     await file.SaveAsync();
-                    ParseObject addplant = new ParseObject("Plant");
-                    addplant["name"] = Name.Text;
-                    addplant["description"] = Description.Text;
-                    addplant["image"] = file;
+                    ParseObject addplant = new ParseObject(typeof(Plant).Name);
+                    addplant[MemberInfoGetting.GetMemberName(() => new Plant().name)] = Name.Text;
+                    addplant[MemberInfoGetting.GetMemberName(() => new Plant().description)] = Description.Text;
+                    addplant[MemberInfoGetting.GetMemberName(() => new Plant().image)] = file;
+                    
+                    addplant[MemberInfoGetting.GetMemberName(() => new Plant().price)] = Convert.ToDouble(txtprice.Text);
+                    addplant[MemberInfoGetting.GetMemberName(() => new Plant().Availability)] = "In Stock";
                     await addplant.SaveAsync();
+                    lblerror.Text = "Saved Successfully";
+                    Name.Text = "";
+                    Description.Text = "";
+                    txtprice.Text = "";
 
-
+                }
+                else
+                {
+                    lblerror.Text = "please select file";
                 }
             }
             catch (Exception en)
             {
-                lblerror.Text = en.ToString();
+                lblerror.Text = en.Message;
             }
 
         }

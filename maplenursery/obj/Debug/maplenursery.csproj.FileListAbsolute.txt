@@ -29,3 +29,5 @@ C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\b
 C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\GMap.NET.Core.xml
 C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\GMap.NET.WindowsForms.xml
 C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\bin\GoogleMaps.LocationServices.dll
+C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\obj\Debug\maplenursery.Properties.Resources.resources
+C:\Users\nisha\documents\visual studio 2013\Projects\maplenursery\maplenursery\obj\Debug\maplenursery.csproj.GenerateResource.Cache

@@ -11,16 +11,12 @@ namespace maplenursery.DataModel
     public class Plant
     {
         public string Id { get; set; }
-
-        public string Name { get; set; }
-
-      
-        public string Desc { get; set; }
-        public Uri imagePath{get; set;}
-
-        public double Price { get; set; }
-        public int Quantity { get; set; }
-        public double Total { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public Uri image { get; set; }
+        public double price { get; set; }
+        public string Availability { get; set; }
+        
         
     }
 }

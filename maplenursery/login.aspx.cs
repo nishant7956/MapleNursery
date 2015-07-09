@@ -1,4 +1,5 @@
-﻿using JustTest1.DataModel;
+﻿using JustTest1.Controller;
+using JustTest1.DataModel;
 using Microsoft.WindowsAzure.MobileServices;
 using Parse;
 using System;
@@ -21,7 +22,7 @@ namespace maplenursery
         public static async Task<User> ValidateLogin(string userName, string password)
         {
             var user = await ParseUser.LogInAsync(userName.Trim(), password.Trim());
-            User currentUser = new User() { Id = user.ObjectId, UserType = user.Get<int>("user_type"), Name = user.Username };
+            User currentUser = new User() { Id = user.ObjectId,user_type = user.Get<int>(MemberInfoGetting.GetMemberName(() => new User().user_type)), username = user.Username };
             return currentUser;
         } 
         //private IMobileServiceTable<User> userTable = Global.MobileService.GetTable<User>();
@@ -129,7 +130,7 @@ namespace maplenursery
             try
             {
                 var user = await ValidateLogin(Login1.UserName, Login1.Password);
-                if (user.UserType == AdminCode)
+                if (user.user_type == AdminCode)
                 {
                     //Session.Add("adminusername", Login1.UserName);
                     Session["adminusername"] = (string)Login1.UserName;
@@ -141,7 +142,7 @@ namespace maplenursery
                         Response.Redirect("admin/addjob.aspx",false);
                     }
                 }
-                if (user.UserType == UserCode)
+                if (user.user_type == UserCode)
                 {
                     
                     

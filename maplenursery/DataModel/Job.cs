@@ -1,29 +1,22 @@
-﻿using Newtonsoft.Json;
+﻿ 
+using Parse;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace JustTest1.DataModel 
+namespace JustTest1.DataModel
 {
-    public class Job 
+    public class Job
     {
-        
-        public string Id { get; set; }
-
-        [JsonProperty(PropertyName = "jobname")]
-        public string JobName { get; set; }
-
-        [JsonProperty(PropertyName = "jobdescription")]
-        public string JobDesc { get; set; }
-
-        [JsonProperty(PropertyName = "assigneduser")]
-        public string AssignedUser { get; set; }
-
-        [JsonProperty(PropertyName = "status")]
-        public string JobStatus { get; set; }
-
-        
+        public string Id { get; set; } 
+        public string name { get; set; } 
+        public string description { get; set; }
+        public string Status { get; set; }
         public string content { get; set; }
+        public DateTime jobDate { get; set; }
+        public ParseGeoPoint locCoordinate { get; set; }
+        public string location { get; set; }
+        public string EmployeeId { get; set; }
+        public string UserRelation { get; set; }
     }
 }

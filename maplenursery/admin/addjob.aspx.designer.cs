@@ -85,6 +85,15 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
+        /// Calendar1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar Calendar1;
+        
+        /// <summary>
         /// LiEmployee control.
         /// </summary>
         /// <remarks>
@@ -103,13 +112,13 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.Label Label4;
         
         /// <summary>
-        /// DLselectedplant control.
+        /// selectedplant control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataList DLselectedplant;
+        protected global::System.Web.UI.WebControls.ListView selectedplant;
         
         /// <summary>
         /// addplant control.
@@ -130,21 +139,12 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
-        /// DataList1 control.
+        /// ListView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataList DataList1;
-        
-        /// <summary>
-        /// selectplant control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button selectplant;
+        protected global::System.Web.UI.WebControls.ListView ListView1;
     }
 }
