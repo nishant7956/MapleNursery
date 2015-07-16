@@ -22,13 +22,13 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// lblidle control.
+        /// lblerror control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblidle;
+        protected global::System.Web.UI.WebControls.Label lblerror;
         
         /// <summary>
         /// txtidle control.
@@ -40,13 +40,13 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.Label txtidle;
         
         /// <summary>
-        /// lbloffwork control.
+        /// lblidle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbloffwork;
+        protected global::System.Web.UI.WebControls.Label lblidle;
         
         /// <summary>
         /// txtoffwork control.
@@ -58,13 +58,13 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.Label txtoffwork;
         
         /// <summary>
-        /// lblfinished control.
+        /// lbloffwork control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblfinished;
+        protected global::System.Web.UI.WebControls.Label lbloffwork;
         
         /// <summary>
         /// txtfinished control.
@@ -76,13 +76,13 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.Label txtfinished;
         
         /// <summary>
-        /// lblworking control.
+        /// lblfinished control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblworking;
+        protected global::System.Web.UI.WebControls.Label lblfinished;
         
         /// <summary>
         /// txtworking control.
@@ -94,13 +94,13 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.Label txtworking;
         
         /// <summary>
-        /// GMap1 control.
+        /// lblworking control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Subgurim.Controles.GMap GMap1;
+        protected global::System.Web.UI.WebControls.Label lblworking;
         
         /// <summary>
         /// imggreen control.
@@ -139,48 +139,30 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.Image Image3;
         
         /// <summary>
-        /// panel1 control.
+        /// GMap1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panel1;
+        protected global::Subgurim.Controles.GMap GMap1;
         
         /// <summary>
-        /// listofusers control.
+        /// lblusers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView listofusers;
+        protected global::System.Web.UI.WebControls.Label lblusers;
         
         /// <summary>
-        /// rejectedjobs control.
+        /// Label3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView rejectedjobs;
-        
-        /// <summary>
-        /// empjobrelation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView empjobrelation;
-        
-        /// <summary>
-        /// lblerror control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblerror;
+        protected global::System.Web.UI.WebControls.Label Label3;
     }
 }

@@ -53,9 +53,8 @@ namespace maplenursery.admin
 
                 if (!IsPostBack)
                 {
-                    bindempjobrelationview();
-                    bindgridview();
-                    bindrejectedlistgrid();
+                    users();
+                    
                     GMap1.Add(GMapType.GTypes.Hybrid);
                     GMap1.Add(GMapType.GTypes.Normal);
                     GMap1.Add(GMapType.GTypes.Satellite);
@@ -92,11 +91,27 @@ namespace maplenursery.admin
 
         public async void finisheduser()
         {
-            var finisheduser = await ParseUser.Query
-                                          .WhereEqualTo("status", UserControlls.statusCode[7])
-                                          .FindAsync();
-            txtfinished.Text = finisheduser.Count().ToString();
-            foreach (ParseUser user in finisheduser)
+            var finisheduser = await ParseObject.GetQuery("CurrentUserStatus")
+                               .WhereEqualTo("status", UserControlls.statusCode[7])
+                               .FindAsync();
+            txtidle.Text = finisheduser.Count() + "";
+            List<User> idle = new List<User>();
+            foreach (ParseObject all in finisheduser)
+            {
+                idle.Add(new User()
+                {
+                    Id = all.Get<string>("userId"),
+                    status = all.Get<string>("status")
+
+                });
+            }
+            var temp = idle.Select(a => a.Id).ToList();
+            var stat = idle.Select(s => s.status).ToList();
+            IEnumerable<ParseUser> finishedusers = await ParseUser.Query
+                              .WhereContainedIn("objectId", temp)
+                              .FindAsync();
+       
+            foreach (ParseUser user in finishedusers)
             {
                 ParseFile img = user.Get<ParseFile>("profilePic");
                 finishuserlist.Add(new User
@@ -105,7 +120,7 @@ namespace maplenursery.admin
                     username = user.Get<string>("username"),
                     lastLocation = user.Get<ParseGeoPoint>("lastLocation"),
                     profilePic = img.Url,
-                    status = user.Get<string>("status")
+                    status = stat.ToString()
                 });
             }
 
@@ -128,52 +143,50 @@ namespace maplenursery.admin
 
         public async void idleuser()
         {
-            var idleuser = await ParseUser.Query
+            var idleuser = await ParseObject.GetQuery("CurrentUserStatus")
                                .WhereEqualTo("status", UserControlls.statusCode[0])
                                .FindAsync();
             txtidle.Text = idleuser.Count() + "";
-            //foreach (ParseUser user in idleuser){
-
-
-            //        int count= user.ObjectId.Count();
-            //        txtidle.Text = count.ToString();
-            //}
-
-            //var userGeoPoint = ParseUser.CurrentUser.Get<ParseGeoPoint>("lastLocation");
-            foreach (ParseUser user in idleuser)
+            List<User> current = new List<User>();
+            foreach (ParseObject all in idleuser)
+            {
+                current.Add(new User()
+                {
+                    Id = all.Get<string>("userId"),
+                    status = all.Get<string>(MemberInfoGetting.GetMemberName(() => new User().status)),
+                   
+                });
+            }
+            var temp = current.Select(a => a.Id).ToList();
+            var sat = current.Select(s => s.status).ToList();
+            IEnumerable<ParseUser> idleusers = await ParseUser.Query
+                              .WhereContainedIn("objectId", temp)
+                              .FindAsync();
+            foreach (ParseUser user in idleusers)
             {
                 ParseFile img = user.Get<ParseFile>("profilePic");
                 idleuserlist.Add(new User
                 {
                     Id = user.ObjectId,
-                    username = user.Get<string>("username"),
-                    lastLocation = user.Get<ParseGeoPoint>("lastLocation"),
-                    profilePic = img.Url,
-                    status = user.Get<string>("status")
+                    //username = user.Get<string>(MemberInfoGetting.GetMemberName(() => new User().username)),
+                    username = user.Username,
+                    lastLocation = user.Get<ParseGeoPoint>(MemberInfoGetting.GetMemberName(() => new User().lastLocation)),
+                    profilePic = img.Url, 
+                    status = sat.ToString()
                 });
+              
+
+
             }
-            GMapOverlay markersOverlay = new GMapOverlay();
+       
             foreach (var locations in idleuserlist)
             {
 
-                //Image i = new Image();
-                //ResizeImage(locations.profilePic, 40, 40);
-                //GIcon icon = new GIcon();
-                //icon.image=locations.profilePic.AbsoluteUri.ToString();
-
-                //icon.shadow = "http://simpleicon.com/wp-content/uploads/map-marker-3.png";
-                //icon.iconSize = new GSize(40, 100);
-                //icon.shadowSize = new GSize(82, 200);
-
-                //string jsonEmployeeResponse = JsonConvert.SerializeObject(locations);
                 PinIcon p;
                 GMarker gm;
                 GInfoWindow win;
 
-                //Bitmap im = new Bitmap(PinIcons.WCmale);
-                //imggreen = PinIcons.WCmale;
-                //imggreen.ForeColor = Color.Green;
-                //body += @"<p><img src='" + domainName + imageFileName +"' alt='Product Image' width='250px' height='250px' runat='server' /></p>";
+                
                 p = new PinIcon(PinIcons.WCmale, Color.Green);
                 gm = new GMarker(new GLatLng(locations.lastLocation.Latitude, locations.lastLocation.Longitude),
                     new GMarkerOptions(new GIcon(p.ToString(), p.Shadow())));
@@ -184,292 +197,47 @@ namespace maplenursery.admin
         }
         public async void working()
         {
-            var workinguser = await ParseUser.Query
-                                   .WhereEqualTo("status", UserControlls.statusCode[4])
-                                   .FindAsync();
-            txtworking.Text = workinguser.Count().ToString();
+            string count = "0";
+            try
+            {
+                var workinguser = await ParseObject.GetQuery("CurrentUserStatus")
+                                       .WhereEqualTo("status", UserControlls.statusCode[4])
+                                       .FindAsync();
+                count = workinguser.Count().ToString();
+            }
+            catch { }
+            txtworking.Text = count;
         }
         public async void offwork()
         {
-            var offworkuser = await ParseUser.Query
+            var offworkuser = await ParseObject.GetQuery("CurrentUserStatus")
                                 .WhereEqualTo("status", UserControlls.statusCode[8])
                                 .FindAsync();
 
             txtoffwork.Text = offworkuser.Count().ToString();
         }
-        public async void bindgridview()
+        public async void users()
         {
+            List<Job> job = new List<Job>();
             try
             {
-                List<Job> job = new List<Job>();
-                IEnumerable<ParseObject> query = await ParseObject.GetQuery(typeof(Job).Name)
-                    .WhereEqualTo(MemberInfoGetting.GetMemberName(() => new Job().Status), JobControlls.JobStatusCode[8])
+                List<string> n=new List<string>();
+                n.Add(JobControlls.JobStatusCode[8]);
+                n.Add(JobControlls.JobStatusCode[3]);
+                var q = n.ToList();
+                var query = await ParseObject.GetQuery(typeof(Job).Name)
+                    .WhereContainedIn(MemberInfoGetting.GetMemberName(() => new Job().Status), q)
+                    
                     .FindAsync();
-                foreach (ParseObject all in query)
-                {
-                    job.Add(new Job()
-                    {
-                        Id = all.ObjectId,
-                        name = all.Get<string>(MemberInfoGetting.GetMemberName(() => new Job().name)),
-                    });
-                }
-                listofusers.DataSource = job;
-                listofusers.DataBind();
-
+                lblusers.Text = query.Count().ToString();
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 lblerror.Text = e.Message;
             }
+          
         }
-        public async void bindempjobrelationview()
-        {
-            try
-            {
-                List<Job> job = new List<Job>();
-                IEnumerable<ParseObject> query = await ParseObject.GetQuery(typeof(Job).Name)
-                    .WhereNotEqualTo(MemberInfoGetting.GetMemberName(() => new Job().EmployeeId), null)
-                    .FindAsync();
-                foreach (ParseObject all in query)
-                {
-                    job.Add(new Job()
-                    {
-                        Id = all.ObjectId,
-                        name = all.Get<string>(MemberInfoGetting.GetMemberName(() => new Job().name)),
-                        EmployeeId = all.Get<string>(MemberInfoGetting.GetMemberName(() => new Job().EmployeeId))
-                    });
-                }
-                var temp = job.Select(a => a.name).ToList();
-               var n = job.Select(a => a.EmployeeId).ToList();
-               //string dogCsv = string.Join(",", temp.ToArray());
-               //var an = new[] { string.Join(",", n.ToArray()) };
-               //lblerror.Text = n.ToString();
-                IEnumerable<ParseUser> idleuser = await ParseUser.Query
-                               .WhereContainedIn("objectId",  n)
-                               .FindAsync();
-                List<User> users = new List<User>();
-                foreach(ParseUser u in idleuser)
-                {
-                    users.Add(new User
-                    {
-                        Id=u.ObjectId,
-                        username = u.Get<string>(MemberInfoGetting.GetMemberName(() => new User().username))
-                    });
-                }
-                var temp1 = users.Select(a => a.Id).ToList();
-                List<EmpJobNames> names = new List<EmpJobNames>();
-                var widgets1_in_widgets2 = from first in job
-                                           join second in users
-                                           on first.EmployeeId equals second.Id
-                                           select new EmpJobNames
-                                               { name=first.name,username=second.username
-            };
-             
-                empjobrelation.DataSource = widgets1_in_widgets2.ToList();
-                empjobrelation.DataBind();
-
-            }
-            catch (Exception e)
-            {
-                lblerror.Text = e.Message;
-            }
-
-
-        }
-        public async void bindrejectedlistgrid()
-        {
-            try
-            {
-                List<Job> job = new List<Job>();
-                IEnumerable<ParseObject> query = await ParseObject.GetQuery(typeof(Job).Name)
-                    .WhereEqualTo(MemberInfoGetting.GetMemberName(() => new Job().Status), JobControlls.JobStatusCode[3])
-                    .FindAsync();
-                foreach (ParseObject all in query)
-                {
-                    job.Add(new Job()
-                    {
-                        Id = all.ObjectId,
-                        name = all.Get<string>(MemberInfoGetting.GetMemberName(() => new Job().name)),
-                    });
-                }
-                rejectedjobs.DataSource = job;
-                rejectedjobs.DataBind();
-
-            }
-            catch (Exception e)
-            {
-                lblerror.Text = e.Message;
-            }
-
-           
-        }
-        protected async void listofusers_RowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
-        {
-            try
-            {
-                IEnumerable<ParseUser> users = await ParseUser.Query
-                    .WhereNotEqualTo(MemberInfoGetting.GetMemberName(() => new User().username), "admin")
-                    .WhereEqualTo(MemberInfoGetting.GetMemberName(() => new User().status), UserControlls.statusCode[0]).FindAsync();
-                List<User> all = new List<User>();
-                if (e.Row.RowType == DataControlRowType.DataRow)
-                {
-                    //Find the DropDownList in the Row
-                    DropDownList idleuserlist = (e.Row.FindControl("idleuser") as DropDownList);
-
-                    foreach (ParseObject obj in users)
-                    {
-                        all.Add(new User()
-                        {
-                            Id = obj.ObjectId,
-                            username = obj.Get<string>(MemberInfoGetting.GetMemberName(() => new User().username))
-                        });
-                    }
-
-                    idleuserlist.DataSource = all;
-                    idleuserlist.DataTextField = MemberInfoGetting.GetMemberName(() => new User().username);
-                    idleuserlist.DataValueField = MemberInfoGetting.GetMemberName(() => new User().Id);
-                    idleuserlist.DataBind();
-                    idleuserlist.Items.Insert(0, new ListItem("Please select"));
-                    //initial= idleuserlist.SelectedValue;
-                }
-            }
-            catch (Exception en)
-            {
-                lblerror.Text = en.Message;
-            }
-        }
-
-
-
-        protected async void listofusers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GridViewRow row1 = listofusers.SelectedRow;
-            Label id = row1.FindControl("lblId") as Label;
-            //Label name = row1.FindControl("lblname") as Label;
-            string selectedid = id.Text.ToString();
-            //string selectedname = name.Text;
-            DropDownList idleuserlist = row1.FindControl("idleuser") as DropDownList;
-            if (idleuserlist.SelectedIndex != 0)
-            {
-
-                string value = idleuserlist.SelectedValue;
-
-
-                IEnumerable<ParseObject> query = await ParseObject.GetQuery(typeof(Job).Name)
-                    .WhereEqualTo("objectId", selectedid).FindAsync();// attempt to change username
-                foreach (ParseObject obj in query)
-                {
-
-                    obj[MemberInfoGetting.GetMemberName(() => new Job().Status)] = JobControlls.JobStatusCode[0];
-                    obj[MemberInfoGetting.GetMemberName(() => new Job().EmployeeId)] = value;
-                    await obj.SaveAsync();
-                    lblerror.Text = "saved successful";
-                }
-
-                //result = true;
-                bindgridview();
-
-                bindempjobrelationview();
-            }
-
-            else
-            {
-                lblerror.Text = "please select the User";
-            }
-        }
-
-        protected void listofusers_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            listofusers.PageIndex = e.NewPageIndex;
-            bindgridview();
-        }
-
-        protected async void rejectedjobs_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-
-            try
-            {
-                IEnumerable<ParseUser> users = await ParseUser.Query
-                    .WhereNotEqualTo(MemberInfoGetting.GetMemberName(() => new User().username), "admin")
-                    .WhereEqualTo(MemberInfoGetting.GetMemberName(() => new User().status), UserControlls.statusCode[0]).FindAsync();
-                List<User> all = new List<User>();
-                if (e.Row.RowType == DataControlRowType.DataRow)
-                {
-                    //Find the DropDownList in the Row
-                    DropDownList idleuserlist = (e.Row.FindControl("idleuser") as DropDownList);
-
-                    foreach (ParseObject obj in users)
-                    {
-                        all.Add(new User()
-                        {
-                            Id = obj.ObjectId,
-                            username = obj.Get<string>(MemberInfoGetting.GetMemberName(() => new User().username))
-                        });
-                    }
-
-                    idleuserlist.DataSource = all;
-                    idleuserlist.DataTextField = MemberInfoGetting.GetMemberName(() => new User().username);
-                    idleuserlist.DataValueField = MemberInfoGetting.GetMemberName(() => new User().Id);
-                    idleuserlist.DataBind();
-                    idleuserlist.Items.Insert(0, new ListItem("Please select"));
-                    //initial= idleuserlist.SelectedValue;
-                }
-            }
-            catch (Exception en)
-            {
-                lblerror.Text = en.Message;
-            }
-        }
-
-        protected void rejectedjobs_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            rejectedjobs.PageIndex = e.NewPageIndex;
-            bindrejectedlistgrid();
-        }
-
-        protected async void rejectedjobs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GridViewRow row1 = rejectedjobs.SelectedRow;
-            Label id = row1.FindControl("lblId") as Label;
-            //Label name = row1.FindControl("lblname") as Label;
-            string selectedid = id.Text.ToString();
-            //string selectedname = name.Text;
-            DropDownList idleuserlist = row1.FindControl("idleuser") as DropDownList;
-            if (idleuserlist.SelectedIndex != 0)
-            {
-
-
-                string value = idleuserlist.SelectedValue;
-
-
-                IEnumerable<ParseObject> query = await ParseObject.GetQuery(typeof(Job).Name)
-                    .WhereEqualTo("objectId", selectedid).FindAsync();// attempt to change username
-                foreach (ParseObject obj in query)
-                {
-
-                    obj[MemberInfoGetting.GetMemberName(() => new Job().Status)] = JobControlls.JobStatusCode[0];
-                    obj[MemberInfoGetting.GetMemberName(() => new Job().EmployeeId)] = value;
-                    await obj.SaveAsync();
-                    lblerror.Text = "saved successful";
-                }
-
-                //result = true;
-                bindrejectedlistgrid();
-                bindempjobrelationview();
-
-            }
-
-            else
-            {
-                lblerror.Text = "please select the User";
-            }
-        }
-
-        protected void empjobrelation_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            empjobrelation.PageIndex = e.NewPageIndex;
-            bindempjobrelationview();
-        }
+        
 
 
 

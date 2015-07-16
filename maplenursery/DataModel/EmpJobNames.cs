@@ -9,5 +9,9 @@ namespace maplenursery.DataModel
     {
         public string name { get; set; }
         public string username { get; set; }
+        public string location { get; set; }
+
+        public string jobstatus { get; set; }
+        public string userstatus { get; set; }
     }
 }

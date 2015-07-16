@@ -3,182 +3,133 @@
 <%@ Register Assembly="GMaps" Namespace="Subgurim.Controles" TagPrefix="cc1" %>
 
 <asp:Content ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-    <div class="row">
-
-        <asp:Label ID="Label1" runat="server" Text="Welcome Admin!!" Font-Bold="True" Font-Size="X-Large"></asp:Label><br />
+  
+    <div class="content-wrapper">
+        
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            <asp:Label ID="Label1" runat="server" Text="Welcome Admin!!">
+                 <asp:Label ID="lblerror" runat="server"></asp:Label>
+            </asp:Label>
+            
+          </h1>
+            </section>
+<!-- Main content -->
+        <section class="content">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-aqua">
+                <div class="inner">
+                  <h3><asp:Label ID="txtidle" runat="server"></asp:Label></h3>
+                  <p><asp:Label ID="lblidle" runat="server" Text="Idle Employees"></asp:Label></p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+          <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-green">
+                <div class="inner">
+                  <h3><asp:Label ID="txtoffwork" runat="server"></asp:Label></h3>
+                  <p><asp:Label ID="lbloffwork" runat="server" Text="Off work"></asp:Label></p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+              <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-yellow">
+                <div class="inner">
+                  <h3><asp:Label ID="txtfinished" runat="server"></asp:Label></h3>
+                  <p><asp:Label ID="lblfinished" runat="server" Text="Finished"></asp:Label></p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-person-add"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+               <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-red">
+                <div class="inner">
+                  <h3><asp:Label ID="txtworking" runat="server"></asp:Label></h3>
+                  <p><asp:Label ID="lblworking" runat="server" Text="Working"></asp:Label></p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
     </div>
     <div class="row">
-        <div class="col-xs-12 col-md-3 col-lg-3 pull-left">
-            <div class="panel panel-default height">
-                <div class="panel-heading">
-                    <asp:Label ID="lblidle" runat="server" Text="Idle Employees"></asp:Label></div>
-                <div class="panel-body">
-                    <strong>
-                        <asp:Label ID="txtidle" runat="server"></asp:Label></strong>
-                </div>
-            </div>
-        </div>
+            <!-- Left col -->
+            <section class="col-lg-7 connectedSortable">
+              <!-- Custom tabs (Charts with tabs)-->
+              <div class="nav-tabs-custom">
+                <!-- Tabs within a box -->
+                <ul class="nav nav-tabs pull-right">
+                  <li class="active">Map</li>
+                  <li class="pull-left header">
+                      
+                    
+                        <asp:Image ID="imggreen" runat="server" ImageUrl="~/Resources/idle.png" Width="17px" Height="25px" />Idle &nbsp
+                     
+                        <asp:Image ID="Image1" runat="server" ImageUrl="~/Resources/working.png" Width="25px" Height="25px" />Working&nbsp
 
-        <div class="col-xs-12 col-md-3 col-lg-3">
-            <div class="panel panel-default height">
-                <div class="panel-heading">
-                    <asp:Label ID="lbloffwork" runat="server" Text="Off work"></asp:Label></div>
-                <div class="panel-body">
-                    <strong>
-                        <asp:Label ID="txtoffwork" runat="server"></asp:Label></strong>
-                </div>
-            </div>
-        </div>
+                      
+                        <asp:Image ID="Image2" runat="server" ImageUrl="~/Resources/offwork.png" Width="17px" Height="25px" />Off Work&nbsp
+                      
+                        <asp:Image ID="Image3" runat="server" ImageUrl="~/Resources/finished.png" Width="16px" Height="25px" />Finished&nbsp
 
-        <div class="col-xs-12 col-md-3 col-lg-3">
-            <div class="panel panel-default height">
-                <div class="panel-heading">
-                    <asp:Label ID="lblfinished" runat="server" Text="Finished"></asp:Label></div>
-                <div class="panel-body">
-                    <strong>
-                        <asp:Label ID="txtfinished" runat="server"></asp:Label></strong>
+                  </li>
+                </ul>
+                <div class="tab-content no-padding">
+                  <!-- Morris chart - Sales -->
+                             <cc1:GMap ID="GMap1" CssClass="embed-responsive embed-responsive-16by9" style="position: relative; height: 300px;" runat="server" enableDoubleClickZoom="true" enableRotation="true" enableGoogleBar="True" enableGTrafficOverlay="True" enableHookMouseWheelToZoom="True" enableTransitOverlay="True"  mapType="Physical" />
+                    
+                  <div class="chart tab-pane active" id="revenue-chart" >
+
+                  </div>
+
                 </div>
-            </div>
+              </div><!-- /.nav-tabs-custom -->
+             
+       </section>
+         <section class="col-lg-5 connectedSortable">
+
+              <!-- Map box -->
+              
+               
+                      <div class="small-box bg-aqua">
+                <div class="inner">
+                  <h3><asp:Label ID="lblusers" runat="server"></asp:Label></h3>
+                  <p><asp:Label ID="Label3" runat="server" Text="Jobs to Assign"></asp:Label></p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+              
+             </section>
         </div>
-        <div class="col-xs-12 col-md-3 col-lg-3 pull-right">
-            <div class="panel panel-default height">
-                <div class="panel-heading">
-                    <asp:Label ID="lblworking" runat="server" Text="Working"></asp:Label>
-                </div>
-                <div class="panel-body">
-                    <strong>
-                        <asp:Label ID="txtworking" runat="server"></asp:Label></strong>
-                </div>
-            </div>
-        </div>
+        
+        </section>
     </div>
 
 
-
-
-
-
-    <div class="row">
-        <div class="col-sm-6">
-
-
-
-
-            <br />
-            <cc1:GMap ID="GMap1" CssClass="embed-responsive embed-responsive-16by9" runat="server" enableDoubleClickZoom="true" enableRotation="true" enableGoogleBar="True" enableGTrafficOverlay="True" enableHookMouseWheelToZoom="True" enableTransitOverlay="True" Height="400px" mapType="Physical" Width="750px" />
-        </div>
-        <div class="col-sm-2" style="margin-top: 300px">
-            <table>
-                <tr>
-                    <td>
-                        <asp:Image ID="imggreen" runat="server" ImageUrl="~/Resources/idle.png" Width="17px" Height="25px" />Idle</td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Image ID="Image1" runat="server" ImageUrl="~/Resources/working.png" Width="25px" Height="25px" />Working</td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Image ID="Image2" runat="server" ImageUrl="~/Resources/offwork.png" Width="17px" Height="25px" />Off Work</td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Image ID="Image3" runat="server" ImageUrl="~/Resources/finished.png" Width="16px" Height="25px" />Finished</td>
-                </tr>
-            </table>
-
-        </div>
-        <div class="col-sm-4">
-            <asp:Panel ID="panel1" runat="server">
-                Assign Jobs
-                 <asp:GridView ID="listofusers" runat="server" AllowPaging="true" PageSize="10" OnPageIndexChanging="listofusers_PageIndexChanging" PagerSettings-Mode="NumericFirstLast" AutoGenerateColumns="False" OnSelectedIndexChanged="listofusers_SelectedIndexChanged" OnRowDataBound="listofusers_RowDataBound">
-                     <EmptyDataRowStyle BackColor="LightBlue"
-                         ForeColor="Red" />
-
-                     <EmptyDataTemplate>
-                         No Data Found.  
-                <a href="addjob.aspx">Add New Job</a>
-                     </EmptyDataTemplate>
-                     <Columns>
-
-                         <asp:TemplateField HeaderText="No.">
-                             <ItemTemplate>
-                                 <%# Container.DataItemIndex +1 %>
-                             </ItemTemplate>
-                         </asp:TemplateField>
-
-                         <asp:BoundField DataField="name" SortExpression="name" HeaderText="Name" />
-                         <asp:TemplateField HeaderText="Available Users"
-                             SortExpression="user">
-
-                             <ItemTemplate>
-
-                                 <asp:DropDownList ID="idleuser" runat="server"></asp:DropDownList>
-                                 <asp:Label ID="lblId" runat="server" Text='<%#Eval("Id") %>' Visible="false"></asp:Label>
-                                 <asp:Label ID="lblname" runat="server" Text='<%#Eval("name") %>' Visible="false"></asp:Label>
-                             </ItemTemplate>
-
-                         </asp:TemplateField>
-                         <asp:ButtonField Text="Update" CommandName="Select" ItemStyle-Width="150" />
-                         <%-- <asp:CommandField HeaderText="Update" ShowHeader="True"  />--%>
-                     </Columns>
-
-
-                 </asp:GridView>
-                <%--<asp:Button ID="btnsave" runat="server" Text="Save" OnClick="btnsave_Click" />--%><br /><br />Reassign Jobs
-                <asp:GridView ID="rejectedjobs" AutoGenerateColumns="false" runat="server" OnSelectedIndexChanged="rejectedjobs_SelectedIndexChanged" OnRowDataBound="rejectedjobs_RowDataBound" OnPageIndexChanging="rejectedjobs_PageIndexChanging" PagerSettings-Mode="NumericFirstLast" PageSize="10" AllowPaging="true">
-                    <EmptyDataRowStyle BackColor="LightBlue"
-                        ForeColor="Red" />
-
-                    <EmptyDataTemplate>
-                        No Jobs to Reassign.  
-                
-                    </EmptyDataTemplate>
-                    <Columns>
-
-                        <asp:TemplateField HeaderText="No.">
-                            <ItemTemplate>
-                                <%# Container.DataItemIndex +1 %>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:BoundField DataField="name" SortExpression="name" HeaderText="Name" />
-                        <asp:TemplateField HeaderText="Available Users"
-                            SortExpression="user">
-
-                            <ItemTemplate>
-
-                                <asp:DropDownList ID="idleuser" runat="server"></asp:DropDownList>
-                                <asp:Label ID="lblId" runat="server" Text='<%#Eval("Id") %>' Visible="false"></asp:Label>
-                                <asp:Label ID="lblname" runat="server" Text='<%#Eval("name") %>' Visible="false"></asp:Label>
-                            </ItemTemplate>
-
-                        </asp:TemplateField>
-                        <asp:ButtonField Text="Update" CommandName="Select" ItemStyle-Width="150" />
-                        <%-- <asp:CommandField HeaderText="Update" ShowHeader="True"  />--%>
-                    </Columns>
-
-                </asp:GridView><br />
-                <br />
-                List showing the Employess assigned to different Jobs
-
-                <asp:GridView ID="empjobrelation" runat="server" AutoGenerateColumns="false" OnPageIndexChanging="empjobrelation_PageIndexChanging" AllowPaging="true" PagerSettings-Mode="NumericFirstLast" PageSize="10">
-                    <Columns>
-                        <asp:BoundField DataField="username" SortExpression="username" HeaderText="Employee Name" />
-                        <asp:BoundField DataField="name" SortExpression="jobname" HeaderText="Assigned Jobs" />
-                    </Columns>
-                </asp:GridView>
-            </asp:Panel>
-
-        </div>
-        <asp:Label ID="lblerror" runat="server"></asp:Label>
-        <br />
-
-        <br />
-
-
-
-    </div>
-
+       
+       
+       
 </asp:Content>

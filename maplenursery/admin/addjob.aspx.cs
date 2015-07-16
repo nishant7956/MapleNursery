@@ -18,81 +18,109 @@ namespace maplenursery.admin
     {
 
 
-       static List<content> allcontent = new List<content>();
+       public  static List<content> allcontent = new List<content>();
         List<EmpJobRelation> empjobrel=new List<EmpJobRelation>();
-        List<string> selected = new List<string>();
-
-       // static List<Plant> listToShow = new List<Plant>();
-        //var user = ParseUser.LogInAsync(userName.Trim(), password.Trim());
-        //private MobileServiceCollection<User, User> items;
-        //private IMobileServiceTable<User> userTable = Global.MobileService.GetTable<User>();
-
-        //private IMobileServiceTable<Job> jobTable = Global.MobileService.GetTable<Job>(); 
+       public static List<string> selected = new List<string>();
+        public string clientid;
+   public  string jobids;
         protected async void Page_Load(object sender, EventArgs e)
         {
-
+            
+            
             //selectplant.Visible = false;
             //Session["pid"] = "_addjob";
-            //if (Session["adminusername"] == null)
-            //{
-                
-            //    Response.Redirect("~/login.aspx",false);
-            //}
-            //items = await userTable
-            //    .Where(con => con.Availability != false)
-            //    .ToCollectionAsync();
+            if (Session["clientid"] == null)
+            {
 
-            //DropDownList1.DataSource = items;
-            //DropDownList1.DataTextField = "Name";
-            //DropDownList1.DataValueField = "Name";
-            //DropDownList1.DataBind();
+                Response.Redirect("selectclient.aspx", false);
+            }
+            else
+            {
+                 clientid = (string)(Session["clientid"]);
+                
+            
+                
+            }
+        
             if(!IsPostBack)
             {
+                //else
+                //{
+                //    Lblerror.Text = "please select an item";
+                //}
+                //addjobs.Visible = false;
+                //clientcontrols.Visible = false;
+                //search.Visible = false;
+              
+                //listofplants.Visible = false;
                 await RefreshTodoItems();
                 //this.Button2.Attributes.Add("onclick", "javascript:return OpenPopup()");
             }
             
 
         }
+        protected void btnHidden_Click(object sender, EventArgs e)
+        {
+            // Bind GridTwo only(after the modification of table in pop-up window
+            // This button click event is performed by Javascript function in pop-up window
+            RefreshContentList(); 
+        }
 
-        //protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
-        //{
+        private void RefreshContentList()
+        {
+            selectedplant.DataSource = allcontent;
+            selectedplant.DataBind(); 
+            foreach (ListViewItem selecteditem in selectedplant.Items)
+            {
+                Label selectedid = (Label)selecteditem.FindControl("Label5");
 
-        //}
+                selected.Add(selectedid.Text);
+
+            }
+            //bool result = selectplant.ids.Intersect(selected).Count() == selectplant.ids.Count;
+            //if (!result) 
+            //{
+            //    selectedplant.DataSource = allcontent;
+            //    selectedplant.DataBind(); 
+            //}
+            //else
+            //{
+            //    Lblerror.Text = "already selected";
+            //}
+            
+        }
+        
+
+     
         private async Task  RefreshTodoItems()
         {
-           
-                // This code refreshes the entries in the list view by querying the TodoItems table.
-                // The query excludes completed TodoItems
-            //var query = from item in ParseObject.GetQuery(User)
-            //            orderby item.ObjectId.
-            //            select item;
-            //ParseQuery<ParseObject> query = ParseObject.GetQuery("User");
-            //query.WhereEqualTo("Availablity", "true");
 
-            //var query = ParseObject.GetQuery("User").WhereEqualTo("Availablity", "true");
-            //query.FindAsync().ContinueWith(t =>
-            //{
-            //    IEnumerable<ParseObject> results = t.Result;
-            //    foreach (var obj in results)
-            //    {
-            //        var name = obj.Get<ParseObject>("Name");
-            //        Lblerror.Text = name.ToString();
-            //        //Debug.Log("Score: " + score);
-            //    }
-            //});
-            IEnumerable<ParseUser> users = await ParseUser.Query
-                .WhereNotEqualTo(MemberInfoGetting.GetMemberName(() => new User().username), "admin").WhereEqualTo(MemberInfoGetting.GetMemberName(() => new User().status),UserControlls.statusCode[0]).FindAsync();
+            DateTime today = DateTime.Today;
+            Calendar1.TodaysDate = today;
+            Calendar1.SelectedDate = Calendar1.TodaysDate;
             List<User> all=new List<User>();
-          //  var query = from all in ParseObject.GetQuery("user")
-          //              where all.Get<string>("availability") != "false"
-          //              select all;
-          //  var final = await query.FindAsync();
-          //      //items = await userTable
-          //      //    .Where(todoItem => todoItem.Availability != false)
-          //      //    .ToCollectionAsync();
+            var idleuser = await ParseObject.GetQuery("CurrentUserStatus")
+                                .WhereEqualTo("status", UserControlls.statusCode[0])
+                                .FindAsync();
+            
+            List<User> current = new List<User>();
+            foreach (ParseObject obj in idleuser)
+            {
+                current.Add(new User()
+                {
+                    Id = obj.Get<string>("userId"),
+                    status = obj.Get<string>(MemberInfoGetting.GetMemberName(() => new User().status)),
 
-            foreach (ParseObject obj in users)
+                });
+            }
+            var temp = current.Select(a => a.Id).ToList();
+          //  var sat = current.Select(s => s.status).ToList();
+            IEnumerable<ParseUser> idleusers = await ParseUser.Query
+                              .WhereContainedIn("objectId", temp)
+                              .WhereNotEqualTo(MemberInfoGetting.GetMemberName(() => new User().username), "admin")
+                              .FindAsync();
+
+            foreach (ParseObject obj in idleusers)
             {
                 all.Add(new User()
                 {
@@ -112,6 +140,7 @@ namespace maplenursery.admin
 
         protected async void Button1_Click(object sender, EventArgs e)
         {
+            
             ParseObject job = new ParseObject(typeof(Job).Name);
             ParseObject empjob = new ParseObject(typeof(EmpJobRelation).Name);
             var locationService = new GoogleLocationService();
@@ -129,29 +158,40 @@ namespace maplenursery.admin
                 //User userObject = items[selectedValue];
                 //Response.Write((selectedValue.Value));
 
-
+                job[MemberInfoGetting.GetMemberName(() => new Job().ClientId)] = clientid;
                 job[MemberInfoGetting.GetMemberName(() => new Job().name)] = JobTitle.Text;
                 job[MemberInfoGetting.GetMemberName(() => new Job().description)] = JobDescription.Text;
-                //job[MemberInfoGetting.GetMemberName(() => new Job().EmployeeId)] = selectedValue.Value;
+                job[MemberInfoGetting.GetMemberName(() => new Job().EmployeeId)] = selectedValue.Value;
                 job[MemberInfoGetting.GetMemberName(() => new Job().content)] = JsonConvert.SerializeObject(allcontent);
-                job[MemberInfoGetting.GetMemberName(() => new Job().Status)] = JobControlls.JobStatusCode[8];
+                job[MemberInfoGetting.GetMemberName(() => new Job().Status)] = JobControlls.JobStatusCode[0];
                 job[MemberInfoGetting.GetMemberName(() => new Job().jobDate)] = dt;
                 job[MemberInfoGetting.GetMemberName(() => new Job().location)]=txtlocation.Text;
                 job[MemberInfoGetting.GetMemberName(() => new Job().locCoordinate)]=addpoint;
-                empjob[MemberInfoGetting.GetMemberName(() => new Job().EmployeeId)]=selectedValue.Value;
-                
+                empjob[MemberInfoGetting.GetMemberName(() => new EmpJobRelation().EmployeeId)] = selectedValue.Value;
                 await job.SaveAsync();
+                IEnumerable<ParseObject> jobid = await ParseObject.GetQuery(typeof(Job).Name)
+                    .WhereEqualTo(MemberInfoGetting.GetMemberName(() => new Job().jobDate), dt).FindAsync();
+                
                 await empjob.SaveAsync();
-                IEnumerable<ParseObject> query  =await ParseObject.GetQuery(typeof(EmpJobRelation).Name)
-                    .WhereEqualTo(MemberInfoGetting.GetMemberName(() => new Job().EmployeeId), selectedValue.Value).FindAsync();
+               
+                foreach(ParseObject obj in jobid)
+                {
+                    empjob[MemberInfoGetting.GetMemberName(() => new EmpJobRelation().JobId)] = obj.ObjectId;
+                    
+                }
+                
+                 var ids = jobid.Select(s => s.ObjectId).ToList();
+                await empjob.SaveAsync();
+                IEnumerable<ParseObject> query = await ParseObject.GetQuery(typeof(EmpJobRelation).Name)
+                   .WhereContainedIn(MemberInfoGetting.GetMemberName(() => new EmpJobRelation().JobId), ids).FindAsync();
                 foreach (ParseObject obj in query)
                 {
                     empjobrel.Add(new EmpJobRelation()
                     {
-                        Id=obj.ObjectId
+                        Id = obj.ObjectId
                     }
                         );
- 
+
                 }
                 //ParseObject p;
                 //var relaiton = p.GetRelation<ParseObject>("UserRelation");
@@ -174,37 +214,62 @@ namespace maplenursery.admin
             ////Debug.WriteLine("" + selectedValue.Id);
             // await InsertnewJob(newJob);
         }
-        public async void bindlist()
-        {
+        //public async void bindlist()
+        //{
 
-            List<content> all = new List<content>();
-            IEnumerable<ParseObject> users = await ParseObject.GetQuery(typeof(Plant).Name).FindAsync();
+        //    List<content> all = new List<content>();
+        //    IEnumerable<ParseObject> users = await ParseObject.GetQuery(typeof(Plant).Name).FindAsync();
 
-            foreach (ParseObject obj in users)
-            {
-                ParseFile img = obj.Get<ParseFile>(MemberInfoGetting.GetMemberName(() => new Plant().image));
-                //Console.Write("" + img.Url); 
-                all.Add(new content()
-                {
-                    Id = obj.ObjectId,
+        //    foreach (ParseObject obj in users)
+        //    {
+        //        ParseFile img = obj.Get<ParseFile>(MemberInfoGetting.GetMemberName(() => new Plant().image));
+        //        //Console.Write("" + img.Url); 
+        //        all.Add(new content()
+        //        {
+        //            Id = obj.ObjectId,
 
-                    name = obj.Get<string>(MemberInfoGetting.GetMemberName(() => new Plant().name)),
-                    description = obj.Get<string>(MemberInfoGetting.GetMemberName(() => new Plant().description)),
-                    image = img.Url,
-                    price = obj.Get<double>(MemberInfoGetting.GetMemberName(() => new Plant().price)),
-                    Quantity = 1
-                });
-            }
-            ListView1.DataSource = all;
-            ListView1.DataBind();
-            //DataList1.DataSource = all;
-            //DataList1.DataBind();
-        }
+        //            name = obj.Get<string>(MemberInfoGetting.GetMemberName(() => new Plant().name)),
+        //            description = obj.Get<string>(MemberInfoGetting.GetMemberName(() => new Plant().description)),
+        //            image = img.Url,
+        //            price = obj.Get<double>(MemberInfoGetting.GetMemberName(() => new Plant().price)),
+        //            Quantity = 1
+        //        });
+        //    }
+        //    ListView1.DataSource = all;
+        //    ListView1.DataBind();
+        //    //DataList1.DataSource = all;
+        //    //DataList1.DataBind();
+        //}
+        
          protected  void addplant_Click(object sender, EventArgs e)
         {
+            
             try
             {
-                ListView1.Visible = true;
+                //Response.Write("<script language=javascript>child=window.open('selectplant.aspx','TheNewpop','width=400,height=400,left=300,top=150')</script>");
+                   string popupScript = "<script language=javascript>"
+                +"var Popup; "+ 
+
+                      "  Popup = window.open('selectplant.aspx', 'bpPopup', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=420,height=300,left = 490,top = 262');" +
+
+                      "  Popup.focus();"+
+
+                       " </script>";
+                   Page.ClientScript.RegisterStartupScript(GetType(), "PopupScript", popupScript);
+
+                 
+                  //string popupScript = "<script language=javascript>" +
+                  //      "var childWindow =  window.open('selectplant.aspx', 'Select Contents', " +
+                  //      "'left = 300, top=150, width=400, height=300, " +
+                  //      "menubar=no, scrollbars=no, resizable=yes'); childWindow.focus();" +
+                  //      "</script>";
+                //Page.ClientScript.RegisterStartupScript(GetType(), "PopupScript", popupScript);
+
+
+                //listofplants.Visible = true;
+                //Response.Redirect("selectplant.aspx",false);
+               
+                //ListView1.Visible = false;
                 //ParseQuery<ParseObject> query = ParseObject.GetQuery("Plant");
 
                 //var queryTask = query.FirstAsync();
@@ -212,7 +277,7 @@ namespace maplenursery.admin
                 //ParseFile applicantResumeFile = obj.Get<ParseFile>("image");
 
                 //string assd = applicantResumeFile.Url + "";
-                 bindlist();
+                //bindlist();
                 //selectplant.Visible = true;
 
             }
@@ -220,33 +285,7 @@ namespace maplenursery.admin
             {
                 Lblerror.Text = err.Message;
             }
-            //lblerror.Text = assd;
-
-            //string resumeText = await new HttpClient().GetStringAsync(image.Url);
-            //IEnumerable<ParseObject> users = await ParseObject.GetQuery("Plant")
-            //   .FindAsync();
-            //List<Plant> all = new List<Plant>();
-            //  var query = from all in ParseObject.GetQuery("user")
-            //              where all.Get<string>("availability") != "false"
-            //              select all;
-            //  var final = await query.FindAsync();
-            //      //items = await userTable
-            //      //    .Where(todoItem => todoItem.Availability != false)
-            //      //    .ToCollectionAsync();
-
-            //foreach (ParseObject obj in users)
-            //{
-            //    all.Add(new Plant()
-            //    {
-            //        Id = obj.ObjectId,
-            //        Name = obj.Get<string>("username"),
-            //        image=obj.Get<File>("image")
-            //    });
-            ////}
-            //GridView1.DataSource = all;
-
-
-            //GridView1.DataBind();
+           
         }
 
      
@@ -256,162 +295,166 @@ namespace maplenursery.admin
            
         //}
 
-        protected void LinkButton1_Click(object sender, EventArgs e)
-        {
+        //protected void LinkButton1_Click(object sender, EventArgs e)
+        //{
 
-            LinkButton btn = (LinkButton)sender;
-            DataListItem item = (DataListItem)btn.NamingContainer;
-            Label lblId = (Label)item.FindControl("LblID");
+        //    LinkButton btn = (LinkButton)sender;
+        //    DataListItem item = (DataListItem)btn.NamingContainer;
+        //    Label lblId = (Label)item.FindControl("LblID");
             
-            string ID = lblId.Text;
+        //    string ID = lblId.Text;
 
-            List<content> ids = new List<content>();
+        //    List<content> ids = new List<content>();
             
             
-            ids.Add(new content(){ Id=ID}
-                );
-            selectedplant.DataSource = ids;
-            selectedplant.DataBind();
-        }
+        //    ids.Add(new content(){ Id=ID}
+        //        );
+        //    selectedplant.DataSource = ids;
+        //    selectedplant.DataBind();
+        //}
 
-        protected void selectplant_Click(object sender, EventArgs e)
-        {
-            //Button btn=(Button)sender; 
-            select_plant();
-            ListView1.Visible = false;
-        }
-        public void select_plant()
-        {
-            foreach (ListViewItem selecteditem in selectedplant.Items)
-            {
-                Label selectedid = (Label)selecteditem.FindControl("Label5");
+        //protected void selectplant_Click(object sender, EventArgs e)
+        //{
+        //    //Button btn=(Button)sender; 
+        //    select_plant();
+        //    ListView1.Visible = false;
+        //    //addjobs.Visible = true;
+        //}
+        //public void select_plant()
+        //{
+        //    foreach (ListViewItem selecteditem in selectedplant.Items)
+        //    {
+        //        Label selectedid = (Label)selecteditem.FindControl("Label5");
                
-                selected.Add(selectedid.Text);
-            }
+        //        selected.Add(selectedid.Text);
+        //    }
             
-            //foreach (DataListItem items in DataList1.Items)
-            //{
+        //    //foreach (DataListItem items in DataList1.Items)
+        //    //{
                
-            //    TextBox quantity = (TextBox)items.FindControl("lblquantity");
-            //    Label price = (Label)items.FindControl("lblprice1");
-            //    CheckBox cb = (CheckBox)items.FindControl("CheckBox1");
-            //    Label lblId = (Label)items.FindControl("LblID"); 
-            //    Image i = (Image)items.FindControl("Image1");
-            //    Label desc = (Label)items.FindControl("description");
-            //    List<string> ids=new List<string>();
-            //    ids.Add(lblId.Text);
-            //    int q = Convert.ToInt16(quantity.Text);
-            //    double p = Convert.ToDouble(price.Text);
+        //    //    TextBox quantity = (TextBox)items.FindControl("lblquantity");
+        //    //    Label price = (Label)items.FindControl("lblprice1");
+        //    //    CheckBox cb = (CheckBox)items.FindControl("CheckBox1");
+        //    //    Label lblId = (Label)items.FindControl("LblID"); 
+        //    //    Image i = (Image)items.FindControl("Image1");
+        //    //    Label desc = (Label)items.FindControl("description");
+        //    //    List<string> ids=new List<string>();
+        //    //    ids.Add(lblId.Text);
+        //    //    int q = Convert.ToInt16(quantity.Text);
+        //    //    double p = Convert.ToDouble(price.Text);
 
-            //    double totol = q * p;
-            //    if ((items.FindControl("CheckBox1") as CheckBox).Checked)
-            //    {
-            //        bool result = ids.Intersect(selected).Count() == ids.Count;
+        //    //    double totol = q * p;
+        //    //    if ((items.FindControl("CheckBox1") as CheckBox).Checked)
+        //    //    {
+        //    //        bool result = ids.Intersect(selected).Count() == ids.Count;
                     
-            //        if (!result)
-            //        {
-            //            allcontent.Add(new content()
-            //            {
-            //                Id = lblId.Text,
-            //                name = cb.Text,
-            //                image = new Uri(i.ImageUrl),
-            //                price = Convert.ToDouble(price.Text),
-            //                description=desc.Text,
-            //                Quantity = Convert.ToInt16(quantity.Text),
-            //                Total=totol
-            //            });
-            //        }
-            //        else
-            //        {
-            //            Lblerror.Text = "already selected";
-            //        }
-            //    }
+        //    //        if (!result)
+        //    //        {
+        //    //            allcontent.Add(new content()
+        //    //            {
+        //    //                Id = lblId.Text,
+        //    //                name = cb.Text,
+        //    //                image = new Uri(i.ImageUrl),
+        //    //                price = Convert.ToDouble(price.Text),
+        //    //                description=desc.Text,
+        //    //                Quantity = Convert.ToInt16(quantity.Text),
+        //    //                Total=totol
+        //    //            });
+        //    //        }
+        //    //        else
+        //    //        {
+        //    //            Lblerror.Text = "already selected";
+        //    //        }
+        //    //    }
                  
-            //}
-            foreach(ListViewItem items in ListView1.Items)
-            {
+        //    //}
+        //    foreach(ListViewItem items in ListView1.Items)
+        //    {
+        //        Label qn = (Label)items.FindControl("Label4");
+               
+        //            TextBox quantity = (TextBox)items.FindControl("TextBox1");
+                    
+                
+        //        Label price = (Label)items.FindControl("lblprice1");
+        //        CheckBox cb = (CheckBox)items.FindControl("CheckBox1");
+        //        Label lblId = (Label)items.FindControl("LblID");
+        //        Image i = (Image)items.FindControl("Image1");
+        //        Label desc = (Label)items.FindControl("description");
+        //        List<string> ids = new List<string>();
+        //        ids.Add(lblId.Text);
+        //       // int q = Convert.ToInt16(quantity.Text);
+        //        double p = Convert.ToDouble(price.Text);
 
-                TextBox quantity = (TextBox)items.FindControl("lblquantity");
-                Label price = (Label)items.FindControl("lblprice1");
-                CheckBox cb = (CheckBox)items.FindControl("CheckBox1");
-                Label lblId = (Label)items.FindControl("LblID");
-                Image i = (Image)items.FindControl("Image1");
-                Label desc = (Label)items.FindControl("description");
-                List<string> ids = new List<string>();
-                ids.Add(lblId.Text);
-                int q = Convert.ToInt16(quantity.Text);
-                double p = Convert.ToDouble(price.Text);
+        //       // double totol = q * p;
+        //        if ((items.FindControl("CheckBox1") as CheckBox).Checked)
+        //        {
+        //            bool result = ids.Intersect(selected).Count() == ids.Count;
 
-                double totol = q * p;
-                if ((items.FindControl("CheckBox1") as CheckBox).Checked)
-                {
-                    bool result = ids.Intersect(selected).Count() == ids.Count;
+        //            if (!result)
+        //            {
+        //                allcontent.Add(new content()
+        //                {
+        //                    Id = lblId.Text,
+        //                    name = cb.Text,
+        //                    image = new Uri(i.ImageUrl),
+        //                    price = Convert.ToDouble(price.Text),
+        //                    description = desc.Text,
+        //                   // Quantity = Convert.ToInt16(quantity.Text),
+        //                    //Total = totol
+        //                });
+        //            }
+        //            else
+        //            {
+        //                Lblerror.Text = "already selected";
+        //            }
+        //        }
 
-                    if (!result)
-                    {
-                        allcontent.Add(new content()
-                        {
-                            Id = lblId.Text,
-                            name = cb.Text,
-                            image = new Uri(i.ImageUrl),
-                            price = Convert.ToDouble(price.Text),
-                            description = desc.Text,
-                            Quantity = Convert.ToInt16(quantity.Text),
-                            Total = totol
-                        });
-                    }
-                    else
-                    {
-                        Lblerror.Text = "already selected";
-                    }
-                }
-
-            }
-            selectedplant.DataSource = allcontent;
-            selectedplant.DataBind();
+        //    }
+        //    selectedplant.DataSource = allcontent;
+        //    selectedplant.DataBind();
             
-            //selectplant.Visible = false;
-        }
+        //    //selectplant.Visible = false;
+        //}
 
         
 
-        protected void ListView1_PagePropertiesChanged(object sender, EventArgs e)
-        {
-            bindlist();
-        }
+        //protected void ListView1_PagePropertiesChanged(object sender, EventArgs e)
+        //{
+        //    bindlist();
+        //}
 
-        protected async void ListView1_ItemCommand(object sender, ListViewCommandEventArgs e)
-        {
+        //protected async void ListView1_ItemCommand(object sender, ListViewCommandEventArgs e)
+        //{
 
-            if (e.CommandArgument == "search")
-            {
-                TextBox searchitem = (TextBox)ListView1.FindControl("txtsearch");
-                //Button search = (Button)e.Item.FindControl("btnsearch");
-                IEnumerable<ParseObject> query = await ParseObject.GetQuery(typeof(Plant).Name).WhereContains
-                    (MemberInfoGetting.GetMemberName(() => new Plant().name), searchitem.Text).FindAsync();
-                List<content> all = new List<content>();
-                //IEnumerable<ParseObject> users = await ParseObject.GetQuery(typeof(Plant).Name).FindAsync();
+        //    if (e.CommandArgument == "search")
+        //    {
+        //        TextBox searchitem = (TextBox)ListView1.FindControl("txtsearch");
+        //        //Button search = (Button)e.Item.FindControl("btnsearch");
+        //        IEnumerable<ParseObject> query = await ParseObject.GetQuery(typeof(Plant).Name).WhereContains
+        //            (MemberInfoGetting.GetMemberName(() => new Plant().name), searchitem.Text).FindAsync();
+        //        List<content> all = new List<content>();
+        //        //IEnumerable<ParseObject> users = await ParseObject.GetQuery(typeof(Plant).Name).FindAsync();
 
-                foreach (ParseObject obj in query)
-                {
-                    ParseFile img = obj.Get<ParseFile>(MemberInfoGetting.GetMemberName(() => new Plant().image));
-                    //Console.Write("" + img.Url); 
-                    all.Add(new content()
-                    {
-                        Id = obj.ObjectId,
+        //        foreach (ParseObject obj in query)
+        //        {
+        //            ParseFile img = obj.Get<ParseFile>(MemberInfoGetting.GetMemberName(() => new Plant().image));
+        //            //Console.Write("" + img.Url); 
+        //            all.Add(new content()
+        //            {
+        //                Id = obj.ObjectId,
 
-                        name = obj.Get<string>(MemberInfoGetting.GetMemberName(() => new Plant().name)),
-                        description = obj.Get<string>(MemberInfoGetting.GetMemberName(() => new Plant().description)),
-                        image = img.Url,
-                        price = obj.Get<double>(MemberInfoGetting.GetMemberName(() => new Plant().price)),
-                        Quantity = 1
-                    });
-                }
+        //                name = obj.Get<string>(MemberInfoGetting.GetMemberName(() => new Plant().name)),
+        //                description = obj.Get<string>(MemberInfoGetting.GetMemberName(() => new Plant().description)),
+        //                image = img.Url,
+        //                price = obj.Get<double>(MemberInfoGetting.GetMemberName(() => new Plant().price)),
+        //                Quantity = 1
+        //            });
+        //        }
 
-                ListView1.DataSource = all;
-                ListView1.DataBind();
-            }
-        }
+        //        ListView1.DataSource = all;
+        //        ListView1.DataBind();
+        //    }
+        //}
 
         protected void selectedplant_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
@@ -420,12 +463,68 @@ namespace maplenursery.admin
                 //ListViewDataItem dataItem = (ListViewDataItem)e.Item;
                 //ListView1.Items.Remove(dataItem);
                 allcontent.RemoveAt(e.Item.DataItemIndex);
-                selectedplant.DataSource = allcontent;
-                selectedplant.DataBind();
-
+                allcontent.Count();
+                selected.RemoveAt(e.Item.DataItemIndex);
+                selected.Count();
+                RefreshContentList(); 
             }
-            
+
         }
+
+        protected void Calendar1_SelectionChanged(object sender, EventArgs e)
+        {
+
+        }
+        //protected void RadioButton_CheckedChanged(object sender, System.EventArgs e)
+        //{
+        //    if(radioexist.Checked)
+        //    {
+        //        search.Visible = true;
+        //        clientcontrols.Visible = false;
+                
+                
+        //    }
+        //    else
+        //    {
+        //        clientcontrols.Visible = true;
+        //        search.Visible = false;
+        //    }
+        //}
+
+        //protected void next_Click(object sender, EventArgs e)
+        //{
+        //    addjobs.Visible = true;
+        //}
+
+        //protected async void searchclient_Click(object sender, EventArgs e)
+        //{
+        //    try 
+        //    { 
+        //       IEnumerable<ParseObject> query= await ParseObject.GetQuery(typeof(Client).Name)
+        //            .WhereEqualTo(MemberInfoGetting.GetMemberName(()=>new Client().name),txtsearchclient.Text).FindAsync();
+        //       if (query.Count() != 0)
+        //       {
+        //           List<Client> all = new List<Client>();
+        //          foreach(ParseObject obj in query)
+        //          {
+        //              clientcontrols.Visible = true;
+        //              clientname.Text=obj.Get<string>(MemberInfoGetting.GetMemberName(()=>new Client().name));
+        //              clientaddress.Text = obj.Get<string>(MemberInfoGetting.GetMemberName(() => new Client().address));
+        //              clientcontact.Text = obj.Get<string>(MemberInfoGetting.GetMemberName(() => new Client().contactnumber));
+        //              clientemail.Text = obj.Get<string>(MemberInfoGetting.GetMemberName(() => new Client().email));
+        //          }
+        //       }
+        //       else
+        //       {
+        //           Lblerror.Text = "Client Does Not Exist";
+        //       }
+              
+        //    }
+        //    catch(Exception en)
+        //    {
+        //        Lblerror.Text = en.Message;
+        //    }
+        //}
 
        
 

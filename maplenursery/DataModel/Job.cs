@@ -18,5 +18,6 @@ namespace JustTest1.DataModel
         public string location { get; set; }
         public string EmployeeId { get; set; }
         public string UserRelation { get; set; }
+        public string ClientId { get; set; }
     }
 }

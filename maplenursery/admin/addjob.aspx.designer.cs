@@ -22,6 +22,15 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.Label Lblerror;
         
         /// <summary>
+        /// addjobs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl addjobs;
+        
+        /// <summary>
         /// Label1 control.
         /// </summary>
         /// <remarks>
@@ -85,15 +94,6 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// Calendar1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar Calendar1;
-        
-        /// <summary>
         /// LiEmployee control.
         /// </summary>
         /// <remarks>
@@ -103,22 +103,22 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.DropDownList LiEmployee;
         
         /// <summary>
-        /// Label4 control.
+        /// lbldate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label lbldate;
         
         /// <summary>
-        /// selectedplant control.
+        /// Calendar1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView selectedplant;
+        protected global::System.Web.UI.WebControls.Calendar Calendar1;
         
         /// <summary>
         /// addplant control.
@@ -130,6 +130,24 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.Button addplant;
         
         /// <summary>
+        /// btnHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnHidden;
+        
+        /// <summary>
+        /// selectedplant control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListView selectedplant;
+        
+        /// <summary>
         /// Button1 control.
         /// </summary>
         /// <remarks>
@@ -139,12 +157,12 @@ namespace maplenursery.admin {
         protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
-        /// ListView1 control.
+        /// Calendar2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView ListView1;
+        protected global::System.Web.UI.WebControls.Calendar Calendar2;
     }
 }

@@ -9,7 +9,7 @@ namespace maplenursery.DataModel
     {
         public string Id { get; set; }
         public string EmployeeId { get; set; }
-
+        public string JobId { get; set; }
         public DateTime StartTravelTime { get; set; }
         public DateTime EndTravelTime { get; set; }
         public DateTime StartWorkingTime { get; set; }

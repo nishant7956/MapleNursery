@@ -13,6 +13,7 @@ namespace JustTest1.DataModel
         public int user_type { get; set; }
         public string status { get; set; }
         public Uri profilePic { get; set; }
+        public string location { get; set; }
         public ParseGeoPoint lastLocation { get; set; } 
     }
 }

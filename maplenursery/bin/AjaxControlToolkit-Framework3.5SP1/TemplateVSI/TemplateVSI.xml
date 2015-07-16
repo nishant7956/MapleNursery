@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<contentProject noCompress="true" output="AjaxControlExtender.vsi">
+
+  <contentItem itemSourceRoot="root" source="TemplateVSI\TemplateVSI.vscontent" />
+
+  <contentProject output="AjaxControlExtenderProjectVB.zip">
+
+    <!-- VB project template files -->
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFiles\__TemplateIcon.ico" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFiles\Behavior.js" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFilesVB\Extender.vb" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFilesVB\Designer.vb" />    
+    <contentItem itemSourceRoot="root" source="TemplateVSI\ProjectTemplateVB\MyTemplate.vstemplate" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\ProjectTemplateVB\AjaxControlExtender.vbproj" />
+
+    <!-- Built files -->
+    <contentItem itemSourceRoot="root" source="SampleWebsite\bin\AjaxControlToolkit.dll" />
+
+  </contentProject>
+
+  <contentProject output="AjaxControlExtenderProjectCS.zip">
+
+    <!-- CS project template files -->
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFiles\__TemplateIcon.ico" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFiles\Behavior.js" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFilesCS\Extender.CS" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFilesCS\Designer.cs" />    
+    <contentItem itemSourceRoot="root" source="TemplateVSI\ProjectTemplateCS\MyTemplate.vstemplate" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\ProjectTemplateCS\AjaxControlExtender.CSproj" />
+
+    <!-- Built files -->
+    <contentItem itemSourceRoot="root" source="SampleWebsite\bin\AjaxControlToolkit.dll" />
+
+  </contentProject>
+
+  <contentProject output="AjaxControlExtenderItemCS.zip">
+
+    <!-- CS Item template files -->
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFiles\__TemplateIcon.ico" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFiles\Behavior.js" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFilesCS\Extender.CS" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFilesCS\Designer.cs" />    
+    <contentItem itemSourceRoot="root" source="TemplateVSI\ItemTemplateCS\MyTemplate.vstemplate" />
+  </contentProject>
+
+  <contentProject output="AjaxControlExtenderItemVB.zip">
+
+    <!-- VB Item template files -->
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFiles\__TemplateIcon.ico" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFiles\Behavior.js" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFilesVB\Extender.vb" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\CommonFilesVB\Designer.vb" />
+    <contentItem itemSourceRoot="root" source="TemplateVSI\ItemTemplateVB\MyTemplate.vstemplate" />
+  </contentProject>
+</contentProject>
