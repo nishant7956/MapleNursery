@@ -21,8 +21,10 @@ namespace maplenursery.admin
        public  static List<content> allcontent = new List<content>();
         List<EmpJobRelation> empjobrel=new List<EmpJobRelation>();
        public static List<string> selected = new List<string>();
+        
         public string clientid;
    public  string jobids;
+      
         protected async void Page_Load(object sender, EventArgs e)
         {
             
@@ -75,6 +77,7 @@ namespace maplenursery.admin
                 Label selectedid = (Label)selecteditem.FindControl("Label5");
 
                 selected.Add(selectedid.Text);
+                 
 
             }
             //bool result = selectplant.ids.Intersect(selected).Count() == selectplant.ids.Count;
@@ -140,7 +143,10 @@ namespace maplenursery.admin
 
         protected async void Button1_Click(object sender, EventArgs e)
         {
-            
+            if(allcontent.Count()==0)
+            {
+                Lblerror.Text = "please add content";
+            }
             ParseObject job = new ParseObject(typeof(Job).Name);
             ParseObject empjob = new ParseObject(typeof(EmpJobRelation).Name);
             var locationService = new GoogleLocationService();

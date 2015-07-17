@@ -57,7 +57,7 @@
                             
                         
                         <div style="width: 190px; min-height: 30px;">
-                            <asp:CheckBox ID="CheckBox1" runat="server" Text='<%# Eval("name") %>' AutoPostBack="true"/>
+                            <asp:CheckBox ID="CheckBox1" runat="server" Text='<%# Eval("name") %>' AutoPostBack="false"/>
                            
                         
                              <asp:Label ID="Label4" runat="server" Text='<%# Eval("Quantity") %>' Visible="false"></asp:Label>

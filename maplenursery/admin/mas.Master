@@ -160,7 +160,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="adminhome.aspx"><i class='fa fa-link'></i> <span>Home</span></a></li>
                <li class="treeview">
-              <a href="#"><i class='fa fa-link'></i> <span>Users</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><i class='fa fa-link'></i> <span>Employees</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="viewemployee.aspx">View All</a></li>
              
@@ -169,9 +169,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
            <%-- <li><a href="#"><i class='fa fa-link'></i> <span>Sales</span></a></li>--%>
             <li class="treeview">
               <a href="#"><i class='fa fa-link'></i> <span>Content Management</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">  
+                <li><a href="addplant.aspx">Add Inventory</a></li>
+                  <li><a href="#">Update Inventory</a></li>
+                  <li><a href="#">VIew Inventory</a></li>
+              </ul>
+            </li>
+              <li class="treeview">
+              <a href="#"><i class='fa fa-link'></i> <span>Job Management</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="addjob.aspx">Add Job</a></li>
-                <li><a href="addplant.aspx">Add Plant</a></li>
+                <li><a href="addjob.aspx">Add new Job</a></li>
+                <li><a href="#">Job Updation</a></li>
                   <li><a href="viewjobs.aspx">View All Jobs</a></li>
               </ul>
             </li>
@@ -181,7 +189,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
+      <div class="content-wrapper" style="margin-left:0px; ">
       
         <section class="content" style="text-align:left">
    
@@ -197,13 +205,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </div><!-- /.content-wrapper -->
 
       <!-- Main Footer -->
-      <footer class="main-footer">
+      <footer class="main-footer" style="padding-top:-20px; margin-top:-30px;">
         <!-- To the right -->
-        <div class="pull-right hidden-xs">
-          Version 1.0
+        <div class="pull-right hidden-xs" style="padding-top:-20px; margin-top:-10px;">
+          <strong>Copyright &copy; 2015 <a href="#">MapleNursery</a>.</strong> All rights reserved.
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2015 <a href="#">MapleNursery</a>.</strong> All rights reserved.
+        
       </footer>
       
       <!-- Control Sidebar -->      

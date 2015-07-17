@@ -35,7 +35,7 @@ namespace maplenursery.admin
         List<User> finishuserlist = new List<User>();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Session.Remove("clientid"); 
             //if (Session["adminusername"] != null)
             //{
             //    Label1.Visible = true;
@@ -94,7 +94,7 @@ namespace maplenursery.admin
             var finisheduser = await ParseObject.GetQuery("CurrentUserStatus")
                                .WhereEqualTo("status", UserControlls.statusCode[7])
                                .FindAsync();
-            txtidle.Text = finisheduser.Count() + "";
+            txtfinished.Text = finisheduser.Count() + "";
             List<User> idle = new List<User>();
             foreach (ParseObject all in finisheduser)
             {

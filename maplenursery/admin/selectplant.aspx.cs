@@ -133,24 +133,18 @@ namespace maplenursery.admin
                
                 int q = Convert.ToInt16(quantity.Text);
                 double p = Convert.ToDouble(price.Text);
-
+                //string count;
                  double totol = q * p;
                 if ((items.FindControl("CheckBox1") as CheckBox).Checked)
                 {
                     ids.Add(lblId.Text);
-                    //bool result = ids.Intersect(addjob.selected).Count() == ids.Count;
-                    List<string> names = new List<string>(); // This will hold text for matched items found
-                    foreach (string item in ids)
-                    {
-                        foreach (string value in addjob.selected)
-                        {
-                            if (value == item)
-                            {
-                                names.Add(item);
-                            }
-                        }
-                    }
-                    if (names.Count==0)
+                    List<string> distinct = ids.Distinct().ToList();
+                   // var DeletedItems = distinct.Except(addjob.selected);
+                   //count =DeletedItems.Count().ToString();
+                    List<string> dis = addjob.selected.Distinct().ToList();
+                    bool result = distinct.Intersect(dis).Count() == distinct.Count;
+                  
+                    if (!result)
                     {
                         //Session["id"] = lblId.Text;
                         //Session["name"] = cb.Text;
